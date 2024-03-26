@@ -1,10 +1,12 @@
-package org.lshh.skeleton.domain.task;
+package org.lshh.skeleton.core.task;
+
+import org.lshh.skeleton.core.task.exception.TaskException;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
 
-public abstract class  SimpleTask implements Task{
+public abstract class AbstractTask implements Task{
     protected Map<String, Object> args = new HashMap<>();
     protected Map<String, Object> results = new HashMap<>();
 
@@ -12,7 +14,7 @@ public abstract class  SimpleTask implements Task{
     public abstract Future<Map<String, Object>> execute();
 
     @Override
-    public final Task setArgs(String key, Object value) {
+    public Task setArgs(String key, Object value) {
         this.args.put(key, value);
         return this;
     }
@@ -28,8 +30,8 @@ public abstract class  SimpleTask implements Task{
         if(results.isEmpty()){
             try {
                 execute().get();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception e) { // todo - InterruptedException, ExecutionException
+                throw TaskException.of("Task execute failed");
             }
         }
         return results;

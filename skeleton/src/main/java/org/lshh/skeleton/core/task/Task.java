@@ -1,4 +1,4 @@
-package org.lshh.skeleton.domain.task;
+package org.lshh.skeleton.core.task;
 
 import java.util.Map;
 import java.util.concurrent.Future;

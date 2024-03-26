@@ -1,9 +1,8 @@
-package org.lshh.skeleton.domain.task.pipeline;
+package org.lshh.skeleton.core.task.pipeline;
 
-import org.lshh.skeleton.domain.task.Task;
+import org.lshh.skeleton.core.task.Task;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public interface Pipeline extends Task {
 
