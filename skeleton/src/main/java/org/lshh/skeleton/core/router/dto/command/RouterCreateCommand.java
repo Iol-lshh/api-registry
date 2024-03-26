@@ -1,4 +1,4 @@
-package org.lshh.skeleton.core.router.command;
+package org.lshh.skeleton.core.router.dto.command;
 
 import lombok.Getter;
 

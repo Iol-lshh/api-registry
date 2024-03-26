@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.lshh.skeleton.core.router.Router;
 import org.lshh.skeleton.core.router.RouterProvider;
 import org.lshh.skeleton.core.router.RouterRepository;
-import org.lshh.skeleton.core.router.command.RouterCreateCommand;
-import org.lshh.skeleton.core.router.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.dto.command.RouterCreateCommand;
+import org.lshh.skeleton.core.router.dto.command.RouterUpdateCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
