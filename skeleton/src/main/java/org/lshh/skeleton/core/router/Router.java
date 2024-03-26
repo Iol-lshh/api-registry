@@ -1,4 +1,4 @@
-package org.lshh.skeleton.domain.router;
+package org.lshh.skeleton.core.router;
 
 public interface Router {
 

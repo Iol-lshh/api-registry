@@ -1,6 +1,6 @@
-package org.lshh.skeleton.domain.router;
+package org.lshh.skeleton.core.router;
 
-import org.lshh.skeleton.domain.router.implement.RouterContext;
+import org.lshh.skeleton.core.router.implement.RouterContext;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,11 +1,11 @@
-package org.lshh.skeleton.domain.router.implement;
+package org.lshh.skeleton.core.router.implement;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.lshh.skeleton.domain.router.Router;
-import org.lshh.skeleton.domain.router.RouterProvider;
-import org.lshh.skeleton.domain.router.command.RouterCreateCommand;
-import org.lshh.skeleton.domain.router.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.Router;
+import org.lshh.skeleton.core.router.RouterProvider;
+import org.lshh.skeleton.core.router.command.RouterCreateCommand;
+import org.lshh.skeleton.core.router.command.RouterUpdateCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -1,9 +1,9 @@
-package org.lshh.skeleton.domain.router.implement;
+package org.lshh.skeleton.core.router.implement;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.lshh.skeleton.domain.router.command.RouterCreateCommand;
-import org.lshh.skeleton.domain.router.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.command.RouterCreateCommand;
+import org.lshh.skeleton.core.router.command.RouterUpdateCommand;
 
 @Getter
 @Entity

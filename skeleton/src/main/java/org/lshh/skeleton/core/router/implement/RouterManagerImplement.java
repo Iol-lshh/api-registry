@@ -1,11 +1,11 @@
-package org.lshh.skeleton.domain.router.implement;
+package org.lshh.skeleton.core.router.implement;
 
 import lombok.RequiredArgsConstructor;
-import org.lshh.skeleton.domain.router.Router;
-import org.lshh.skeleton.domain.router.RouterManager;
-import org.lshh.skeleton.domain.router.RouterProvider;
-import org.lshh.skeleton.domain.router.command.RouterCreateCommand;
-import org.lshh.skeleton.domain.router.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.Router;
+import org.lshh.skeleton.core.router.RouterManager;
+import org.lshh.skeleton.core.router.RouterProvider;
+import org.lshh.skeleton.core.router.command.RouterCreateCommand;
+import org.lshh.skeleton.core.router.command.RouterUpdateCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

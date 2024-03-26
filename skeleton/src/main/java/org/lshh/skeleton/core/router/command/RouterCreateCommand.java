@@ -1,4 +1,4 @@
-package org.lshh.skeleton.domain.router.command;
+package org.lshh.skeleton.core.router.command;
 
 import lombok.Getter;
 

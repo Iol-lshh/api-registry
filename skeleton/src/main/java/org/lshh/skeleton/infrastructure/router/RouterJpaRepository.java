@@ -1,6 +1,6 @@
 package org.lshh.skeleton.infrastructure.router;
 
-import org.lshh.skeleton.domain.router.implement.RouterContext;
+import org.lshh.skeleton.core.router.implement.RouterContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package org.lshh.skeleton.domain.router.implement;
+package org.lshh.skeleton.core.router.implement;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.lshh.skeleton.domain.router.Router;
-import org.lshh.skeleton.domain.router.RouterProvider;
-import org.lshh.skeleton.domain.router.command.RouterCreateCommand;
-import org.lshh.skeleton.domain.router.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.Router;
+import org.lshh.skeleton.core.router.RouterProvider;
+import org.lshh.skeleton.core.router.command.RouterCreateCommand;
+import org.lshh.skeleton.core.router.command.RouterUpdateCommand;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;

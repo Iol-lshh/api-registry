@@ -1,6 +1,6 @@
-package org.lshh.skeleton.domain.router.implement;
+package org.lshh.skeleton.core.router.implement;
 
-import org.lshh.skeleton.domain.router.Router;
+import org.lshh.skeleton.core.router.Router;
 
 public class RouterImplement implements Router{
     private RouterContext context;

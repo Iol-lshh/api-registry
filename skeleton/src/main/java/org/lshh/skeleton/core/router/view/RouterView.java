@@ -1,4 +1,4 @@
-package org.lshh.skeleton.domain.router.view;
+package org.lshh.skeleton.core.router.view;
 
 public record RouterView(
         Long id,

@@ -1,11 +1,11 @@
-package org.lshh.skeleton.domain.router.implement;
+package org.lshh.skeleton.core.router.implement;
 
 import lombok.RequiredArgsConstructor;
-import org.lshh.skeleton.domain.router.Router;
-import org.lshh.skeleton.domain.router.RouterProvider;
-import org.lshh.skeleton.domain.router.RouterRepository;
-import org.lshh.skeleton.domain.router.command.RouterCreateCommand;
-import org.lshh.skeleton.domain.router.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.Router;
+import org.lshh.skeleton.core.router.RouterProvider;
+import org.lshh.skeleton.core.router.RouterRepository;
+import org.lshh.skeleton.core.router.command.RouterCreateCommand;
+import org.lshh.skeleton.core.router.command.RouterUpdateCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -43,4 +43,6 @@ public class RouterProviderImplement implements RouterProvider {
         renewal = routerRepository.update(renewal);
         return Routers.of(renewal);
     }
+
+    // todo delete?
 }
