@@ -10,4 +10,6 @@ public interface RouterManager {
     List<Router> findAll();
     Router create(RouterCreateCommand command);
     Router update(RouterUpdateCommand command);
+    void clearCache();
+    boolean isCached(String path);
 }

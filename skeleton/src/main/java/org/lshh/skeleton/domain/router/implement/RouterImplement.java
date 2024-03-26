@@ -13,7 +13,13 @@ public class RouterImplement implements Router{
         return new RouterImplement(context);
     }
 
+    @Override
     public String getPath() {
         return context.getPath();
+    }
+
+    @Override
+    public Long getId() {
+        return context.getId();
     }
 }

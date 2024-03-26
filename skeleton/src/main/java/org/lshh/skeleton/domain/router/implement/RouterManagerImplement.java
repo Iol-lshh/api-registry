@@ -22,13 +22,12 @@ public class RouterManagerImplement implements RouterManager {
 
     public Router findByPath(String path){
         // cache
-        Optional<Router> mayRouter = Optional.ofNullable(routerMap.get(path));
-        if(mayRouter.isPresent()){
-            return mayRouter.get();
+        if(isCached(path)){
+            return routerMap.get(path);
         }
 
         // repository
-        mayRouter = provider.findByPath(path);
+        Optional<Router> mayRouter = provider.findByPath(path);
         if(mayRouter.isPresent()){
             routerMap.put(path, mayRouter.get());
             return mayRouter.get();
@@ -57,5 +56,15 @@ public class RouterManagerImplement implements RouterManager {
         Router router = provider.update(command);
         routerMap.put(router.getPath(), router);
         return router;
+    }
+
+    @Override
+    public void clearCache() {
+        routerMap.clear();
+    }
+
+    @Override
+    public boolean isCached(String path) {
+        return routerMap.containsKey(path);
     }
 }

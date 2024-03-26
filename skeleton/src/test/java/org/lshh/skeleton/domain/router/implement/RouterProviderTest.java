@@ -1,13 +1,15 @@
 package org.lshh.skeleton.domain.router.implement;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.lshh.skeleton.domain.router.Router;
 import org.lshh.skeleton.domain.router.RouterRepository;
 import org.lshh.skeleton.domain.router.command.RouterCreateCommand;
 import org.lshh.skeleton.domain.router.command.RouterUpdateCommand;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class RouterProviderTest {
 
     @Mock
@@ -24,8 +27,8 @@ public class RouterProviderTest {
     RouterProviderImplement routerProvider;
 
     @Test
+    @DisplayName("RouterProvider:findByPath 성공")
     public void testFindByPath_findsRouter_whenPathExists(){
-        MockitoAnnotations.initMocks(this);
         String path = "/test-path";
         RouterContext testContext = new RouterContext();
         
@@ -38,8 +41,8 @@ public class RouterProviderTest {
     }
 
     @Test
+    @DisplayName("RouterProvider:findByPath 실패")
     public void testFindByPath_returnsEmptyOptional_whenPathNotExist(){
-        MockitoAnnotations.initMocks(this);
         String path = "/nonexistent-path";
 
         when(routerRepository.findByPath(path)).thenReturn(Optional.empty());
@@ -51,8 +54,8 @@ public class RouterProviderTest {
     }
 
     @Test
+    @DisplayName("RouterProvider:findAll 성공")
     public void testFindAll_returnsAllRouters(){
-        MockitoAnnotations.initMocks(this);
         RouterContext testContext1 = new RouterContext();
         RouterContext testContext2 = new RouterContext();
 
@@ -64,8 +67,8 @@ public class RouterProviderTest {
     }
 
     @Test
+    @DisplayName("RouterProvider:create 성공")
     public void testCreate_createsRouter(){
-        MockitoAnnotations.initMocks(this);
         RouterCreateCommand command = RouterCreateCommand.of("test-path", "test-method", "test-service", 1L);
         RouterContext testContext = new RouterContext();
 
@@ -77,8 +80,8 @@ public class RouterProviderTest {
     }
 
     @Test
+    @DisplayName("RouterProvider:update 성공")
     public void testUpdate_updatesRouter(){
-        MockitoAnnotations.initMocks(this);
         RouterContext testContext = new RouterContext();
         RouterUpdateCommand command = RouterUpdateCommand.of(1L, "test-path", "test-method", "test-service", 1L);
 
