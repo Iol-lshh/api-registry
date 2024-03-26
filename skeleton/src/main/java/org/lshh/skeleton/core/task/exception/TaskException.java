@@ -5,7 +5,4 @@ public class TaskException extends RuntimeException{
         super(message);
     }
 
-    public static TaskException of(String message){
-        return new TaskException(message);
-    }
 }

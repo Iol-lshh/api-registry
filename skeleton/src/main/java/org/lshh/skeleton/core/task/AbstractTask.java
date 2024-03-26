@@ -31,7 +31,7 @@ public abstract class AbstractTask implements Task{
             try {
                 execute().get();
             } catch (Exception e) { // todo - InterruptedException, ExecutionException
-                throw TaskException.of("Task execute failed");
+                throw new TaskException("Task execute failed");
             }
         }
         return results;
