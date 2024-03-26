@@ -7,13 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Future;
 
 public class SimplePipeline extends AbstractTask implements Pipeline {
     Queue<Task> subTasks = new ConcurrentLinkedQueue<>();
 
     @Override
-    public Future<Map<String, Object>> execute() {
+    public Map<String, Object> execute() {
         Task task = subTasks.poll();
 
         while(task != null) {

@@ -14,6 +14,7 @@ public class QueryContext {
     Long id;
     String title;
     String body;
+    Long resourceId;
 
     public static QueryContext of(QueryCreateCommand command) {
         QueryContext context = new QueryContext();

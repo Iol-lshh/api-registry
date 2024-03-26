@@ -1,10 +1,15 @@
 package org.lshh.skeleton.core.resource.query;
 
+import org.lshh.skeleton.core.resource.query.implement.QueryContext;
+import org.lshh.skeleton.core.resource.query.implement.QueryImplement;
+
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
 public interface Query {
-    Query setQuery(String query);
-    Query setArgs(String key, Object val);
-    List<Map<String, Object>> query() throws Exception;
+    public static Query of(QueryContext queryContext, DataSource dataSource) {
+        return new QueryImplement(queryContext.getBody(), dataSource);
+    }
+    List<Map<String, Object>> query(Map<String, Object> args);
 }
