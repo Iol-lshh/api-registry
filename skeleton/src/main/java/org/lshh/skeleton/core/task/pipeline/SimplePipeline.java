@@ -1,5 +1,6 @@
 package org.lshh.skeleton.core.task.pipeline;
 
+import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
 import org.lshh.skeleton.core.task.AbstractTask;
 import org.lshh.skeleton.core.task.Task;
 
@@ -12,7 +13,7 @@ public class SimplePipeline extends AbstractTask implements Pipeline {
     Queue<Task> subTasks = new ConcurrentLinkedQueue<>();
 
     @Override
-    public Map<String, Object> execute() {
+    public ArgumentsMap<String, Object> execute() {
         Task task = subTasks.poll();
 
         while(task != null) {

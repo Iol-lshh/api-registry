@@ -1,5 +1,6 @@
 package org.lshh.skeleton.core.resource.query;
 
+import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
 import org.lshh.skeleton.core.task.AbstractTask;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class QueryTask extends AbstractTask {
     }
 
     @Override
-    public Map<String, Object> execute() {
+    public ArgumentsMap<String, Object> execute() {
         // todo return query.query(args);
         return null;
     }

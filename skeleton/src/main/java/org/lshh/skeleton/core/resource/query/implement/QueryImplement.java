@@ -9,17 +9,17 @@ import java.util.Map;
 
 public class QueryImplement implements Query {
 
+    private final Long ID;
     private final String QUERY_BODY;
     private final DataSource DATA_SOURCE;
     private final NamedParameterJdbcTemplate JDBC_TEMPLATE;
 
-    public QueryImplement(String query, DataSource dataSource){
-        QUERY_BODY = query;
+    public QueryImplement(QueryContext query, DataSource dataSource){
+        ID = query.getId();
+        QUERY_BODY = query.getBody();
         DATA_SOURCE = dataSource;
         JDBC_TEMPLATE = new NamedParameterJdbcTemplate(DATA_SOURCE);
     }
-
-
 
     @Override
     public List<Map<String, Object>> query(Map<String, Object> args) {

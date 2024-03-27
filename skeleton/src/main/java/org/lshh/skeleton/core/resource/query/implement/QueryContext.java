@@ -20,6 +20,7 @@ public class QueryContext {
         QueryContext context = new QueryContext();
         context.title = command.getTitle();
         context.body = command.getBody();
+        context.resourceId = command.getResourceId();
         return context;
     }
 
@@ -28,6 +29,7 @@ public class QueryContext {
         context.id = command.getId();
         context.title = command.getTitle();
         context.body = command.getBody();
+        context.resourceId = command.getResourceId();
         return context;
     }
 }

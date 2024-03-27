@@ -8,11 +8,14 @@ public class QueryUpdateCommand {
     String title;
     String body;
 
-    public static QueryUpdateCommand of(Long id, String title, String body) {
+    Long resourceId;
+
+    public static QueryUpdateCommand of(Long id, String title, String body, Long resourceId) {
         QueryUpdateCommand command = new QueryUpdateCommand();
         command.id = id;
         command.title = title;
         command.body = body;
+        command.resourceId = resourceId;
         return command;
     }
 }
