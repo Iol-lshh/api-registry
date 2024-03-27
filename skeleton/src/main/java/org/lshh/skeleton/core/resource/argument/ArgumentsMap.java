@@ -2,31 +2,18 @@ package org.lshh.skeleton.core.resource.argument;
 
 import java.util.*;
 
-public class ArgumentsMap <K, V> extends AbstractMap<K, List<V>> {
-    Map<K, List<V>> argumentsMap = new HashMap<>();
+public interface ArgumentsMap <K, R> extends Map<K, R> {
 
-    public Object getObject(K key){
-        List<V> values = argumentsMap.get(key);
-        return values.size() > 1 ? values : values.get(0);
-    }
+    List<R> getList(Object key);
 
-    public List<V> getValues(K key){
-        return argumentsMap.get(key);
-    }
 
-    public V getValue(K key){
-        List<V> result = argumentsMap.get(key);
-        return result == null ? null : result.getFirst();
-    }
+    List<R> put(K key, List<R> list);
 
-    @Override
-    public List<V> put(K key, List<V> values){
-        argumentsMap.put(key, values);
-        return values;
-    }
+    boolean add(K key, R value);
 
-    @Override
-    public Set<Entry<K, List<V>>> entrySet() {
-        return argumentsMap.entrySet();
-    }
+    boolean addAll(K key, List<R> list);
+
+    Collection<List<R>> valueLists();
+
+    Set<Entry<K, List<R>>> entryListSet();
 }
