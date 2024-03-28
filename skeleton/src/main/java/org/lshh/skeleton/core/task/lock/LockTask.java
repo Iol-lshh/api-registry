@@ -1,6 +1,6 @@
 package org.lshh.skeleton.core.task.lock;
 
-public interface TaskLock {
+public interface LockTask {
     // 어떻게 처리? 분산락이 필요할텐데?
     // 요청된 식별자에 대해 락을 걸지 선택하도록 한다.
     // 1. 라우터 단위

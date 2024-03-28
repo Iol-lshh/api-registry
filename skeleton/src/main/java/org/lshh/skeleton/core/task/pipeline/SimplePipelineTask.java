@@ -1,7 +1,7 @@
 package org.lshh.skeleton.core.task.pipeline;
 
 import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
-import org.lshh.skeleton.core.task.AbstractTask;
+import org.lshh.skeleton.core.task.implement.AbstractTask;
 import org.lshh.skeleton.core.task.Task;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class SimplePipeline extends AbstractTask implements Pipeline {
+public class SimplePipelineTask extends AbstractTask implements PipelineTask {
     Queue<Task> subTasks = new ConcurrentLinkedQueue<>();
 
     @Override

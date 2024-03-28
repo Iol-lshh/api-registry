@@ -1,15 +1,15 @@
 package org.lshh.skeleton.core.resource.query;
 
+import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
 import org.lshh.skeleton.core.resource.query.implement.QueryContext;
-import org.lshh.skeleton.core.resource.query.implement.QueryImplement;
+import org.lshh.skeleton.core.resource.query.implement.SimpleQuery;
 
 import javax.sql.DataSource;
-import java.util.List;
 import java.util.Map;
 
 public interface Query {
-    public static Query of(QueryContext queryContext, DataSource dataSource) {
-        return new QueryImplement(queryContext, dataSource);
+    static Query of(QueryContext queryContext, DataSource dataSource) {
+        return new SimpleQuery(queryContext, dataSource);
     }
-    List<Map<String, Object>> query(Map<String, Object> args);
+    ArgumentsMap<String, Object> query(Map<String, Object> args);
 }

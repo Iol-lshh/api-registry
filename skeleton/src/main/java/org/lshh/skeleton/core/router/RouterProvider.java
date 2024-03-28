@@ -3,7 +3,7 @@ package org.lshh.skeleton.core.router;
 import org.lshh.skeleton.core.router.dto.command.RouterCreateCommand;
 import org.lshh.skeleton.core.router.dto.command.RouterUpdateCommand;
 import org.lshh.skeleton.core.router.implement.RouterContext;
-import org.lshh.skeleton.core.router.implement.RouterImplement;
+import org.lshh.skeleton.core.router.implement.SimpleRouter;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public interface RouterProvider {
 
     class Routers{
         public static Router of(RouterContext context){
-            return RouterImplement.of(context);
+            return SimpleRouter.of(context);
         }
     }
 }

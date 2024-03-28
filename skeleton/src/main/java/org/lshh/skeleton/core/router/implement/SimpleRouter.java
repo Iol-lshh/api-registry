@@ -2,15 +2,14 @@ package org.lshh.skeleton.core.router.implement;
 
 import org.lshh.skeleton.core.router.Router;
 
-public class RouterImplement implements Router{
+public class SimpleRouter implements Router{
     private RouterContext context;
 
-    RouterImplement(RouterContext context) {
+    SimpleRouter(RouterContext context) {
         this.context = context;
     }
-
-    public static RouterImplement of(RouterContext context) {
-        return new RouterImplement(context);
+    public static Router of(RouterContext context) {
+        return new SimpleRouter(context);
     }
 
     @Override

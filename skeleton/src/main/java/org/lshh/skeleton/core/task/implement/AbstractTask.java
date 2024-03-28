@@ -1,13 +1,14 @@
-package org.lshh.skeleton.core.task;
+package org.lshh.skeleton.core.task.implement;
 
 import org.lshh.skeleton.core.resource.argument.ArgumentsHashMap;
 import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
+import org.lshh.skeleton.core.task.Task;
 import org.lshh.skeleton.core.task.exception.TaskException;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractTask implements Task{
+public abstract class AbstractTask implements Task {
     protected Map<String, Object> args = new ArgumentsHashMap<String, Object>();
     protected Map<String, Object> results = new HashMap<>();
 

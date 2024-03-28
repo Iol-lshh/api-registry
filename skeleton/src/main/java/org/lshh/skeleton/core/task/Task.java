@@ -9,4 +9,11 @@ public interface Task {
     Task setArgs(String key, Object value) ;
     Task setArgs(Map<String, Object> args);
     Map<String, Object> getResults();
+
+    public enum TaskType{
+        QUERY,
+        PIPELINE,
+        PARALLEL,
+        LOCK
+    }
 }

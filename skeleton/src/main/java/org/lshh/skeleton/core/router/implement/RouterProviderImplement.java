@@ -1,20 +1,23 @@
 package org.lshh.skeleton.core.router.implement;
 
-import lombok.RequiredArgsConstructor;
 import org.lshh.skeleton.core.router.Router;
 import org.lshh.skeleton.core.router.RouterProvider;
 import org.lshh.skeleton.core.router.RouterRepository;
 import org.lshh.skeleton.core.router.dto.command.RouterCreateCommand;
 import org.lshh.skeleton.core.router.dto.command.RouterUpdateCommand;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
-@Component
 public class RouterProviderImplement implements RouterProvider {
     private final RouterRepository routerRepository;
+
+    private RouterProviderImplement(RouterRepository routerRepository) {
+        this.routerRepository = routerRepository;
+    }
+    public static RouterProvider of(RouterRepository routerRepository) {
+        return new RouterProviderImplement(routerRepository);
+    }
 
     @Override
     public Optional<Router> findByPath(String path){
