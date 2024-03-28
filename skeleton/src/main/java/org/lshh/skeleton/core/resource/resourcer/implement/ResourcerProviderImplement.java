@@ -20,12 +20,16 @@ public class ResourcerProviderImplement implements ResourcerProvider {
 
     @Override
     public Optional<Resourcer> find(Long resourceId) {
-        return repository.findById(resourceId);
+        return repository.findById(resourceId)
+                .map(Resourcers::of);
     }
 
     @Override
     public List<Resourcer> findAll() {
-        return repository.findAll();
+        return repository.findAll()
+                .stream()
+                .map(Resourcers::of)
+                .toList();
     }
 
     @Override

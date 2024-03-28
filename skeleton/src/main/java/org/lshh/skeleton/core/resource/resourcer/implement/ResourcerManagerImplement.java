@@ -22,7 +22,6 @@ public class ResourcerManagerImplement implements ResourcerManager {
         return new ResourcerManagerImplement(provider);
     }
 
-
     @Override
     public Resourcer find(Long resourceId) {
         // cache
@@ -45,21 +44,21 @@ public class ResourcerManagerImplement implements ResourcerManager {
     public List<Resourcer> findAll() {
         List<Resourcer> list = provider.findAll();
         list.forEach(resourcer -> cacheMap.put(resourcer.getId(), resourcer));
-        return null;
+        return list;
     }
 
     @Override
     public Resourcer create(ResourcerCreateCommand command) {
-        Resourcer created = provider.create(command);
-        cacheMap.put(created.getId(), created);
-        return created;
+        Resourcer newOne = provider.create(command);
+        cacheMap.put(newOne.getId(), newOne);
+        return newOne;
     }
 
     @Override
     public Resourcer update(ResourcerUpdateCommand command) {
-        Resourcer updated = provider.update(command);
-        cacheMap.put(updated.getId(), updated);
-        return updated;
+        Resourcer renewal = provider.update(command);
+        cacheMap.put(renewal.getId(), renewal);
+        return renewal;
     }
 
     @Override

@@ -1,19 +1,31 @@
 package org.lshh.skeleton.core.resource.resourcer.implement;
 
+import com.zaxxer.hikari.HikariConfig;
 import org.lshh.skeleton.core.resource.resourcer.RdbmsResourcer;
-import org.lshh.skeleton.core.resource.resourcer.Resourcer;
 
 import javax.sql.DataSource;
 
 public class SimpleRdbmsResourcer implements RdbmsResourcer {
 
-    public static Resourcer of(ResourcerContext context) {
+    ResourcerContext context;
+    DataSource dataSource;
+
+    private SimpleRdbmsResourcer() {
+        RdbmsResourcer resourcer = new SimpleRdbmsResourcer();
+
+    }
+    public static RdbmsResourcer of(ResourcerContext context) {
         return new SimpleRdbmsResourcer();
     }
 
+//    public createDataSource(){
+//        HikariConfig config = new HikariConfig();
+//
+//    }
+
     @Override
     public DataSource getDataSource() {
-        return null;
+        return this.dataSource;
     }
 
     @Override

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ResourcerRepository {
-    Optional<Resourcer> findById(Long resourceId);
+    Optional<ResourcerContext> findById(Long resourceId);
 
-    List<Resourcer> findAll();
+    List<ResourcerContext> findAll();
 
     ResourcerContext create(ResourcerContext newOne);
 

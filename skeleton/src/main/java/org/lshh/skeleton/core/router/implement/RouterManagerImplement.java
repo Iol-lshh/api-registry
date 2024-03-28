@@ -42,9 +42,9 @@ public class RouterManagerImplement implements RouterManager {
 
     @Override
     public List<Router> findAll() {
-        List<Router> routerList = provider.findAll();
-        routerList.forEach(router -> cacheMap.put(router.getPath(), router));
-        return routerList;
+        List<Router> list = provider.findAll();
+        list.forEach(router -> cacheMap.put(router.getPath(), router));
+        return list;
     }
 
     @Override
