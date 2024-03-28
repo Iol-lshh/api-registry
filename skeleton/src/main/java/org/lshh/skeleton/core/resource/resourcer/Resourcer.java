@@ -2,7 +2,11 @@ package org.lshh.skeleton.core.resource.resourcer;
 
 public interface Resourcer {
 
-    public enum ResourcerType{
+    ResourcerType getType();
+
+    Long getId();
+
+    enum ResourcerType{
         RDBMS, API
     }
 }

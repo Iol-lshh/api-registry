@@ -10,7 +10,7 @@ public interface Task {
     Task setArgs(Map<String, Object> args);
     Map<String, Object> getResults();
 
-    public enum TaskType{
+    enum TaskType{
         QUERY,
         PIPELINE,
         PARALLEL,

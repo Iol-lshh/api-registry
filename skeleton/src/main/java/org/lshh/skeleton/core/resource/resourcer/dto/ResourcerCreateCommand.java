@@ -1,11 +1,12 @@
 package org.lshh.skeleton.core.resource.resourcer.dto;
 
-import org.lshh.skeleton.core.resource.resourcer.Resourcer;
+import lombok.Getter;
+import org.lshh.skeleton.core.resource.resourcer.Resourcer.ResourcerType;
 
+@Getter
 public class ResourcerCreateCommand {
-    private Long id;
     private String name;
     private String endpoint;
     private String description;
-    private Resourcer.ResourcerType type;
+    private ResourcerType type;
 }

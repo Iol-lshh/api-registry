@@ -3,13 +3,16 @@ package org.lshh.skeleton.core.resource.resourcer.implement;
 import org.lshh.skeleton.core.resource.resourcer.Resourcer;
 import org.lshh.skeleton.core.resource.resourcer.ResourcerManager;
 import org.lshh.skeleton.core.resource.resourcer.ResourcerProvider;
-import org.lshh.skeleton.core.router.Router;
+import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerCreateCommand;
+import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerUpdateCommand;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ResourcerManagerImplement implements ResourcerManager {
-    private final Map<String, Router> cacheMap = new HashMap<>();
+    private final Map<Long, Resourcer> cacheMap = new HashMap<>();
     private final ResourcerProvider provider;
 
     private ResourcerManagerImplement(ResourcerProvider provider) {
@@ -22,7 +25,51 @@ public class ResourcerManagerImplement implements ResourcerManager {
 
     @Override
     public Resourcer find(Long resourceId) {
+        // cache
+        if(isCached(resourceId)){
+            return cacheMap.get(resourceId);
+        }
+
+        // repository
+        Optional<Resourcer> mayResourcer = provider.find(resourceId);
+        if(mayResourcer.isPresent()){
+            cacheMap.put(resourceId, mayResourcer.get());
+            return mayResourcer.get();
+        }
+
+        // fail
         return null;
+    }
+
+    @Override
+    public List<Resourcer> findAll() {
+        List<Resourcer> list = provider.findAll();
+        list.forEach(resourcer -> cacheMap.put(resourcer.getId(), resourcer));
+        return null;
+    }
+
+    @Override
+    public Resourcer create(ResourcerCreateCommand command) {
+        Resourcer created = provider.create(command);
+        cacheMap.put(created.getId(), created);
+        return created;
+    }
+
+    @Override
+    public Resourcer update(ResourcerUpdateCommand command) {
+        Resourcer updated = provider.update(command);
+        cacheMap.put(updated.getId(), updated);
+        return updated;
+    }
+
+    @Override
+    public void clearCache() {
+        cacheMap.clear();
+    }
+
+    @Override
+    public boolean isCached(Long id) {
+        return cacheMap.containsKey(id);
     }
 
 }
