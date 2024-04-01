@@ -3,7 +3,7 @@ package org.lshh.skeleton.core.resource.resourcer;
 import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerCreateCommand;
 import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerUpdateCommand;
 import org.lshh.skeleton.core.resource.resourcer.implement.ResourcerContext;
-import org.lshh.skeleton.core.resource.resourcer.implement.SimpleRdbmsResourcer;
+import org.lshh.skeleton.core.resource.resourcer.implement.SimpleJdbcResourcer;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,13 +19,10 @@ public interface ResourcerProvider {
 
     class Resourcers{
         public static Resourcer of(ResourcerContext context){
-            switch(context.getType()){
-                case RDBMS:
-                    return SimpleRdbmsResourcer.of(context);
-
-                default:
-                    return null;
-            }
+            return switch (context.getType()) {
+                case RDBMS -> SimpleJdbcResourcer.of(context);
+                default -> null;
+            };
         }
     }
 }

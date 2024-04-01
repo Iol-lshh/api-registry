@@ -13,14 +13,17 @@ public class ResourcerContext {
     @Id
     private Long id;
     private String name;
-    private String endpoint;
+    private String url;
     private String description;
     private ResourcerType type;
+    private String username;
+    private String password;
+    private String adaptorName;
 
     public static ResourcerContext of(ResourcerCreateCommand command) {
         ResourcerContext context = new ResourcerContext();
         context.name = command.getName();
-        context.endpoint = command.getEndpoint();
+        context.url = command.getUrl();
         context.description = command.getDescription();
         context.type = command.getType();
         return context;
@@ -29,7 +32,7 @@ public class ResourcerContext {
         ResourcerContext context = new ResourcerContext();
         context.id = command.getId();
         context.name = command.getName();
-        context.endpoint = command.getEndpoint();
+        context.url = command.getUrl();
         context.description = command.getDescription();
         context.type = command.getType();
         return context;

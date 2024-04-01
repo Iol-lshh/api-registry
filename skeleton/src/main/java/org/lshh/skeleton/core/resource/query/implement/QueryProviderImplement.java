@@ -5,7 +5,7 @@ import org.lshh.skeleton.core.resource.query.QueryProvider;
 import org.lshh.skeleton.core.resource.query.QueryRepository;
 import org.lshh.skeleton.core.resource.query.dto.command.QueryCreateCommand;
 import org.lshh.skeleton.core.resource.query.dto.command.QueryUpdateCommand;
-import org.lshh.skeleton.core.resource.query.exception.QueryTaskException;
+import org.lshh.skeleton.core.resource.query.exception.ResourceQueryException;
 
 import javax.sql.DataSource;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class QueryProviderImplement implements QueryProvider {
             return Optional.of(Query.of(queryContext, dataSource));
         }
 
-        throw new QueryTaskException("QueryTask not found");
+        throw new ResourceQueryException("QueryTask not found");
     }
 
     @Override

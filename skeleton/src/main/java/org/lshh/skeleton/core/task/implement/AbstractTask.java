@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractTask implements Task {
-    protected Map<String, Object> args = new ArgumentsHashMap<String, Object>();
+    protected ArgumentsHashMap<String, Object> args = new ArgumentsHashMap<String, Object>();
     protected Map<String, Object> results = new HashMap<>();
 
     @Override
@@ -31,7 +31,7 @@ public abstract class AbstractTask implements Task {
     public Map<String, Object> getResults(){
         if(results.isEmpty()){
             try {
-                execute();
+                setArgs(execute());
             } catch (Exception e) {
                 throw new TaskException("Task execute failed");
             }

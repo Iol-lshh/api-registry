@@ -7,7 +7,7 @@ import org.lshh.skeleton.core.resource.resourcer.Resourcer.ResourcerType;
 public class ResourcerUpdateCommand {
     private Long id;
     private String name;
-    private String endpoint;
+    private String url;
     private String description;
     private ResourcerType type;
 }

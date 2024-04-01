@@ -6,7 +6,7 @@ import org.lshh.skeleton.core.resource.resourcer.Resourcer.ResourcerType;
 @Getter
 public class ResourcerCreateCommand {
     private String name;
-    private String endpoint;
+    private String url;
     private String description;
     private ResourcerType type;
 }
