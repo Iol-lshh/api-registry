@@ -4,8 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.lshh.skeleton.core.router.Router;
 import org.lshh.skeleton.core.router.RouterProvider;
-import org.lshh.skeleton.core.router.dto.command.RouterCreateCommand;
-import org.lshh.skeleton.core.router.dto.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.dto.RouterCreateCommand;
+import org.lshh.skeleton.core.router.dto.RouterUpdateCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

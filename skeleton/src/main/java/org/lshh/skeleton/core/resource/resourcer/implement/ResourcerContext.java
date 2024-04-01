@@ -26,6 +26,9 @@ public class ResourcerContext {
         context.url = command.getUrl();
         context.description = command.getDescription();
         context.type = command.getType();
+        context.username = command.getName();
+        context.password = command.getPassword();
+        context.adaptorName = command.getAdaptorName();
         return context;
     }
     public static ResourcerContext of(ResourcerUpdateCommand command) {
@@ -35,6 +38,14 @@ public class ResourcerContext {
         context.url = command.getUrl();
         context.description = command.getDescription();
         context.type = command.getType();
+        context.username = command.getName();
+        context.password = command.getPassword();
+        context.adaptorName = command.getAdaptorName();
         return context;
+    }
+
+    public ResourcerContext setId(Long resourceId) {
+        this.id = resourceId;
+        return this;
     }
 }

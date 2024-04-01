@@ -3,8 +3,8 @@ package org.lshh.skeleton.core.router.implement;
 import org.lshh.skeleton.core.router.Router;
 import org.lshh.skeleton.core.router.RouterManager;
 import org.lshh.skeleton.core.router.RouterProvider;
-import org.lshh.skeleton.core.router.dto.command.RouterCreateCommand;
-import org.lshh.skeleton.core.router.dto.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.dto.RouterCreateCommand;
+import org.lshh.skeleton.core.router.dto.RouterUpdateCommand;
 
 import java.util.HashMap;
 import java.util.List;

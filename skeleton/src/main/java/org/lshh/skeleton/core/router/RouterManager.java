@@ -1,7 +1,7 @@
 package org.lshh.skeleton.core.router;
 
-import org.lshh.skeleton.core.router.dto.command.RouterCreateCommand;
-import org.lshh.skeleton.core.router.dto.command.RouterUpdateCommand;
+import org.lshh.skeleton.core.router.dto.RouterCreateCommand;
+import org.lshh.skeleton.core.router.dto.RouterUpdateCommand;
 
 import java.util.List;
 
