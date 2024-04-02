@@ -1,7 +1,7 @@
 package org.lshh.skeleton.core.resource.resourcer.implement;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.lshh.skeleton.core.resource.resourcer.JdbcResourcer;
@@ -35,6 +35,7 @@ public class SimpleJdbcResourcerTest {
     String databaseName = "test";
 
     @Test
+    @DisplayName("SimpleJdbcResourcer::initDataSource 성공(H2)")
     public void testInitDataSource_byH2() {
         Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
@@ -65,6 +66,7 @@ public class SimpleJdbcResourcerTest {
     }
 
     @Test
+    @DisplayName("SimpleJdbcResourcer::of 성공(h2)")
     public void testDataSource_h2_default() {
         Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
@@ -94,6 +96,7 @@ public class SimpleJdbcResourcerTest {
     }
 
     @Test
+    @DisplayName("SimpleJdbcResourcer::of 성공(mysql)")
     public void testDataSource_mysql() {
         Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
@@ -123,6 +126,7 @@ public class SimpleJdbcResourcerTest {
     }
 
     @Test
+    @DisplayName("SimpleJdbcResourcer::setConectionPool 성공(mysql)")
     void setConectionPool_ModifySettings_Succeed() {
         Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(

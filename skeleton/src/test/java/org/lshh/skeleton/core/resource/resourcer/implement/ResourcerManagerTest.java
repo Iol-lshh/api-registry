@@ -1,5 +1,6 @@
 package org.lshh.skeleton.core.resource.resourcer.implement;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.lshh.skeleton.core.resource.resourcer.Resourcer;
@@ -26,6 +27,7 @@ public class ResourcerManagerTest {
     @InjectMocks
     ResourcerManagerImplement resourcerManager;
     @Test
+    @DisplayName("ResourcerManager::find 성공(캐시미스)")
     void find_WithResourceNotInCache_ReturnProvidedResource() {
         long resourceId = 1L;
         Resourcer mockResourcer = mock(Resourcer.class);
@@ -38,6 +40,7 @@ public class ResourcerManagerTest {
     }
     
     @Test
+    @DisplayName("ResourcerManager::find 성공(캐시히트)")
     void find_WithResourceInCache_ReturnCachedResource() {
         long resourceId = 1L;
         ResourcerCreateCommand mockCreateCommand = mock(ResourcerCreateCommand.class);
@@ -53,6 +56,7 @@ public class ResourcerManagerTest {
     }
 
     @Test
+    @DisplayName("ResourcerManager::find 실패(리소스 없음)")
     void find_WithResourceNotFound_ReturnNull() {
         long resourceId = 1L;
         when(provider.find(resourceId)).thenReturn(Optional.empty());
@@ -63,6 +67,7 @@ public class ResourcerManagerTest {
     }
 
     @Test
+    @DisplayName("ResourcerManager::findAll 성공")
     void findAll_ReturnsCorrectList_WhenCalled() {
         Resourcer resourcer1 = mock(Resourcer.class);
         Resourcer resourcer2 = mock(Resourcer.class);
@@ -76,17 +81,31 @@ public class ResourcerManagerTest {
     }
 
     @Test
-    public void update() {
+    @DisplayName("ResourcerManager::create 성공")
+    public void create() {
         Resourcer resourcer = mock(Resourcer.class);
         when(resourcer.getId()).thenReturn(1L);
-        ResourcerUpdateCommand resourcerUpdateCommand = mock(ResourcerUpdateCommand.class);
-        when(provider.update(resourcerUpdateCommand)).thenReturn(resourcer);
+        ResourcerCreateCommand command = mock(ResourcerCreateCommand.class);
+        when(provider.create(command)).thenReturn(resourcer);
 
-        Resourcer resultResourcer = resourcerManager.update(resourcerUpdateCommand);
+        Resourcer resultResourcer = resourcerManager.create(command);
         assertEquals(resourcer, resultResourcer);
     }
 
     @Test
+    @DisplayName("ResourcerManager::update 성공")
+    public void update() {
+        Resourcer resourcer = mock(Resourcer.class);
+        when(resourcer.getId()).thenReturn(1L);
+        ResourcerUpdateCommand command = mock(ResourcerUpdateCommand.class);
+        when(provider.update(command)).thenReturn(resourcer);
+
+        Resourcer resultResourcer = resourcerManager.update(command);
+        assertEquals(resourcer, resultResourcer);
+    }
+
+    @Test
+    @DisplayName("ResourcerManager::clearCache 성공")
     void clearCache() {
         ResourcerCreateCommand command = ResourcerCreateCommand.of("name", "url", "description", RDBMS, "username", "password", "adaptorName");
         Resourcer result = mock(Resourcer.class);

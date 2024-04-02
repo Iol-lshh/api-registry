@@ -50,7 +50,7 @@ public class ResourcerProviderIntegrationTest {
 
 
     @Test
-    @DisplayName("find Exist Resourcer")
+    @DisplayName("ResourcerProvider::find 성공")
     public void find_Exist_ReturnResourcer() {
         Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
@@ -71,7 +71,7 @@ public class ResourcerProviderIntegrationTest {
 
 
     @Test
-    @DisplayName("find All Resourcer List")
+    @DisplayName("ResourcerProvider::findAll 성공")
     public void testFindAll() {
         ResourcerCreateCommand command1 = ResourcerCreateCommand.of(
                 "h2test",
@@ -100,6 +100,7 @@ public class ResourcerProviderIntegrationTest {
     }
 
     @Test
+    @DisplayName("ResourcerProvider::create 성공")
     void testCreate() {
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
                 "name",
@@ -117,6 +118,7 @@ public class ResourcerProviderIntegrationTest {
     }
 
     @Test
+    @DisplayName("ResourcerProvider::update 성공")
     void testUpdate() {
         ResourcerUpdateCommand command = ResourcerUpdateCommand.of(
                 1L,
