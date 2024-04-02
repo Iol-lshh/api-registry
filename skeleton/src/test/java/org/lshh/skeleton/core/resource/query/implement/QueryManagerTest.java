@@ -40,7 +40,6 @@ public class QueryManagerTest {
         verify(provider, times(0)).find(queryId, mockDataSource);
     }
 
-    // This test case verifies that if a Query is not in the cache but can be retrieved from provider, the find method of QueryManagerImplement returns the Query and also adds it to cache.
     @Test
     public void find_notCached() {
         Long queryId = 1L;
