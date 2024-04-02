@@ -12,7 +12,6 @@ import org.lshh.skeleton.core.resource.query.QueryProvider;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -4,7 +4,6 @@ import org.lshh.skeleton.core.resource.query.dto.QueryCreateCommand;
 import org.lshh.skeleton.core.resource.query.dto.QueryUpdateCommand;
 
 import javax.sql.DataSource;
-import java.util.List;
 import java.util.Optional;
 
 public interface QueryProvider {
