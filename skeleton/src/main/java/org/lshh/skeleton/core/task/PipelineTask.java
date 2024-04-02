@@ -1,6 +1,4 @@
-package org.lshh.skeleton.core.task.pipeline;
-
-import org.lshh.skeleton.core.task.Task;
+package org.lshh.skeleton.core.task;
 
 import java.util.List;
 

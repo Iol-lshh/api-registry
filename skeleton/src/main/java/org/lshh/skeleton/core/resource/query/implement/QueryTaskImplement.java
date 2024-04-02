@@ -3,7 +3,7 @@ package org.lshh.skeleton.core.resource.query.implement;
 import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
 import org.lshh.skeleton.core.resource.query.Query;
 import org.lshh.skeleton.core.task.implement.AbstractTask;
-import org.lshh.skeleton.core.task.query.QueryTask;
+import org.lshh.skeleton.core.task.QueryTask;
 
 import java.util.Map;
 

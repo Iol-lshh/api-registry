@@ -1,6 +1,7 @@
-package org.lshh.skeleton.core.task.pipeline;
+package org.lshh.skeleton.core.task.implement;
 
 import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
+import org.lshh.skeleton.core.task.PipelineTask;
 import org.lshh.skeleton.core.task.implement.AbstractTask;
 import org.lshh.skeleton.core.task.Task;
 

@@ -1,6 +1,4 @@
-package org.lshh.skeleton.core.task.parallel;
-
-import org.lshh.skeleton.core.task.Task;
+package org.lshh.skeleton.core.task;
 
 public interface ParallelTask extends Task {
     // 묶음 열어 병렬적으로 처리(경합)

@@ -1,10 +1,8 @@
 package org.lshh.skeleton.core.resource.resourcer;
 
-import org.lshh.skeleton.core.resource.resourcer.implement.ResourcerContext;
-
 import javax.sql.DataSource;
 
-public interface RdbmsResourcer extends Resourcer{
+public interface JdbcResourcer extends Resourcer{
 
     @Override
     default ResourcerType getType(){

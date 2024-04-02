@@ -2,11 +2,11 @@ package org.lshh.skeleton.core.resource.resourcer.implement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.lshh.skeleton.core.resource.resourcer.RdbmsResourcer;
+import org.lshh.skeleton.core.resource.resourcer.JdbcResourcer;
 
 import javax.sql.DataSource;
 
-public class SimpleJdbcResourcer implements RdbmsResourcer {
+public class SimpleJdbcResourcer implements JdbcResourcer {
     DataSource dataSource;
     ResourcerContext context;
 
@@ -14,7 +14,7 @@ public class SimpleJdbcResourcer implements RdbmsResourcer {
         this.context = context;
         initDataSource();
     }
-    public static RdbmsResourcer of(ResourcerContext context) {
+    public static JdbcResourcer of(ResourcerContext context) {
         return new SimpleJdbcResourcer(context);
     }
 
@@ -35,5 +35,10 @@ public class SimpleJdbcResourcer implements RdbmsResourcer {
     @Override
     public Long getId() {
         return this.context.getId();
+    }
+
+    @Override
+    public String getName() {
+        return this.context.getName();
     }
 }

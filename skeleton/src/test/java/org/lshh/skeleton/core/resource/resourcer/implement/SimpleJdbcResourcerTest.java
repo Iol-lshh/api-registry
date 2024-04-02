@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.lshh.skeleton.core.resource.resourcer.RdbmsResourcer;
+import org.lshh.skeleton.core.resource.resourcer.JdbcResourcer;
 import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerCreateCommand;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testcontainers.containers.GenericContainer;
@@ -83,7 +83,7 @@ public class SimpleJdbcResourcerTest {
         );
         ResourcerContext context = ResourcerContext.of(command).setId(resourceId);
 
-        RdbmsResourcer resourcer = SimpleJdbcResourcer.of(context);
+        JdbcResourcer resourcer = SimpleJdbcResourcer.of(context);
         DataSource dataSource = resourcer.getDataSource();
 
         assertNotNull(dataSource);
@@ -110,7 +110,7 @@ public class SimpleJdbcResourcerTest {
         );
         ResourcerContext context = ResourcerContext.of(command).setId(resourceId);
 
-        RdbmsResourcer resourcer = SimpleJdbcResourcer.of(context);
+        JdbcResourcer resourcer = SimpleJdbcResourcer.of(context);
         DataSource dataSource = resourcer.getDataSource();
 
         assertNotNull(dataSource);

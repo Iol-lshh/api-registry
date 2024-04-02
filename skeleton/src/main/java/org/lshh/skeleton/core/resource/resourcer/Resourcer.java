@@ -5,6 +5,7 @@ public interface Resourcer {
     ResourcerType getType();
 
     Long getId();
+    String getName();
 
     enum ResourcerType{
         RDBMS, API
