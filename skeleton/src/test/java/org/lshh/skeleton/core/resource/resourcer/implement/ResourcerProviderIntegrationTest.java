@@ -1,10 +1,10 @@
 package org.lshh.skeleton.core.resource.resourcer.implement;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.lshh.skeleton.core.resource.resourcer.Resourcer;
+import org.lshh.skeleton.core.resource.resourcer.ResourcerProvider;
 import org.lshh.skeleton.core.resource.resourcer.ResourcerRepository;
 import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerCreateCommand;
 import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerUpdateCommand;
@@ -23,22 +23,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.lshh.skeleton.core.resource.resourcer.Resourcer.ResourcerType.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.lshh.skeleton.core.resource.resourcer.Resourcer.ResourcerType.RDBMS;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 @Testcontainers
-@ExtendWith(MockitoExtension.class)
-public class ResourcerProviderTest {
+@SpringBootTest
+public class ResourcerProviderIntegrationTest {
 
-    @Mock
-    ResourcerRepository repository;
-    @InjectMocks
-    ResourcerProviderImplement resourcerProvider;
-
+    @Autowired
+    ResourcerProvider resourcerProvider;
 
     @Container
     public static GenericContainer container = new MySQLContainer(DockerImageName.parse("mysql:5.7"))
@@ -65,9 +62,7 @@ public class ResourcerProviderTest {
                 "password",
                 "com.mysql.cj.jdbc.Driver"
         );
-        ResourcerContext context = ResourcerContext.of(command).setId(resourceId);
-        when(repository.findById(any(Long.class))).thenReturn(Optional.of(context));
-
+        resourcerProvider.create(command);
         Optional<Resourcer> resourcerOptional = resourcerProvider.find(resourceId);
 
         assertTrue(resourcerOptional.isPresent());
@@ -78,7 +73,6 @@ public class ResourcerProviderTest {
     @Test
     @DisplayName("find All Resourcer List")
     public void testFindAll() {
-        Long resourceId1 = 1L;
         ResourcerCreateCommand command1 = ResourcerCreateCommand.of(
                 "h2test",
                 "jdbc:h2:~/test",
@@ -88,8 +82,6 @@ public class ResourcerProviderTest {
                 "",
                 "org.h2.Driver"
         );
-        ResourcerContext fakeContext1 = ResourcerContext.of(command1).setId(resourceId1);
-        Long resourceId2 = 2L;
         ResourcerCreateCommand command2 = ResourcerCreateCommand.of(
                 "name",
                 "jdbc:mysql://"+host+":"+port+"/"+databaseName,
@@ -99,18 +91,16 @@ public class ResourcerProviderTest {
                 "password",
                 "com.mysql.cj.jdbc.Driver"
         );
-        ResourcerContext fakeContext2 = ResourcerContext.of(command2).setId(resourceId2);
-        List<ResourcerContext> resourcerContexts = Arrays.asList(fakeContext1, fakeContext2);
-        when(repository.findAll()).thenReturn(resourcerContexts);
+        resourcerProvider.create(command1);
+        resourcerProvider.create(command2);
 
         List<Resourcer> result = resourcerProvider.findAll();
 
-        assertEquals(result.size(), resourcerContexts.size());
+        assertTrue(result.size() >= 2);
     }
 
     @Test
     void testCreate() {
-        Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
                 "name",
                 "jdbc:mysql://"+host+":"+port+"/"+databaseName,
@@ -120,20 +110,16 @@ public class ResourcerProviderTest {
                 "password",
                 "com.mysql.cj.jdbc.Driver"
         );
-        ResourcerContext fakeContext = ResourcerContext.of(command).setId(resourceId);
-        when(repository.create(any(ResourcerContext.class))).thenReturn(fakeContext);
 
         Resourcer resourcer = resourcerProvider.create(command);
 
-        assertEquals(fakeContext.getId(), resourcer.getId());
-        verify(repository).create(any(ResourcerContext.class));
+        assertNotNull(resourcer.getId());
     }
 
     @Test
     void testUpdate() {
-        Long resourceId = 1L;
         ResourcerUpdateCommand command = ResourcerUpdateCommand.of(
-                resourceId,
+                1L,
                 "name",
                 "jdbc:mysql://"+host+":"+port+"/"+databaseName,
                 "description",
@@ -143,11 +129,9 @@ public class ResourcerProviderTest {
                 "com.mysql.cj.jdbc.Driver"
         );
         ResourcerContext fakeContext = ResourcerContext.of(command);
-        when(repository.update(any(ResourcerContext.class))).thenReturn(fakeContext);
 
         Resourcer resourcer = resourcerProvider.update(command);
 
         assertEquals(fakeContext.getId(), resourcer.getId());
-        verify(repository).update(any(ResourcerContext.class));
     }
 }

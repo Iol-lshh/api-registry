@@ -24,22 +24,15 @@ import static org.lshh.skeleton.core.resource.resourcer.Resourcer.ResourcerType.
 public class SimpleJdbcResourcerTest {
 
     @Container
-    public GenericContainer container = new MySQLContainer(DockerImageName.parse("mysql:5.7"))
+    public static GenericContainer container = new MySQLContainer(DockerImageName.parse("mysql:5.7"))
             .withDatabaseName("test")
             .withUsername("testname")
             .withPassword("password")
             .withReuse(true);
 
-    String host;
-    Integer port;
-    String databaseName;
-
-    @BeforeEach
-    public void setUp() {
-        host = container.getHost();
-        port = container.getFirstMappedPort();
-        databaseName = "test";
-    }
+    String host = container.getHost();
+    Integer port = container.getFirstMappedPort();
+    String databaseName = "test";
 
     @Test
     public void testInitDataSource_byH2() {
@@ -60,8 +53,10 @@ public class SimpleJdbcResourcerTest {
         DataSource dataSource = resourcer.getDataSource();
 
         assertNotNull(dataSource);
+        assertEquals(resourceId, context.getId());
         assertEquals(resourceId, resourcer.getId());
         assertEquals(command.getName(), context.getName());
+        assertEquals(command.getName(), resourcer.getName());
         assertEquals(command.getDescription(), context.getDescription());
         assertEquals("jdbc:h2:~/test", ((HikariDataSource) dataSource).getJdbcUrl());
         assertEquals("sa", ((HikariDataSource) dataSource).getUsername());
@@ -87,8 +82,10 @@ public class SimpleJdbcResourcerTest {
         DataSource dataSource = resourcer.getDataSource();
 
         assertNotNull(dataSource);
+        assertEquals(resourceId, context.getId());
         assertEquals(resourceId, resourcer.getId());
         assertEquals(command.getName(), context.getName());
+        assertEquals(command.getName(), resourcer.getName());
         assertEquals(command.getDescription(), context.getDescription());
         assertEquals("jdbc:h2:~/test", ((HikariDataSource) dataSource).getJdbcUrl());
         assertEquals("sa", ((HikariDataSource) dataSource).getUsername());
@@ -114,8 +111,10 @@ public class SimpleJdbcResourcerTest {
         DataSource dataSource = resourcer.getDataSource();
 
         assertNotNull(dataSource);
+        assertEquals(resourceId, context.getId());
         assertEquals(resourceId, resourcer.getId());
         assertEquals(command.getName(), context.getName());
+        assertEquals(command.getName(), resourcer.getName());
         assertEquals(command.getDescription(), context.getDescription());
         assertEquals(command.getUrl(), ((HikariDataSource) dataSource).getJdbcUrl());
         assertEquals(command.getUsername(), ((HikariDataSource) dataSource).getUsername());
@@ -123,4 +122,34 @@ public class SimpleJdbcResourcerTest {
         assertEquals(command.getAdaptorName(), ((HikariDataSource) dataSource).getDriverClassName());
     }
 
+    @Test
+    void setConectionPool_ModifySettings_Succeed() {
+        Long resourceId = 1L;
+        ResourcerCreateCommand command = ResourcerCreateCommand.of(
+                "name",
+                "jdbc:mysql://"+host+":"+port+"/"+databaseName,
+                "description",
+                RDBMS,
+                "testname",
+                "password",
+                "com.mysql.cj.jdbc.Driver"
+        );
+        ResourcerContext context = ResourcerContext.of(command).setId(resourceId);
+        JdbcResourcer resourcer = SimpleJdbcResourcer.of(context);
+
+        // Prepare
+        int maxPoolSize = 5, minIdle = 2;
+        long connectionTimeout = 20000, idleTimeout = 400000, maxLifeTime = 1200000;
+
+        // Act
+        resourcer.setConectionPool(maxPoolSize, minIdle, connectionTimeout, idleTimeout, maxLifeTime);
+        HikariDataSource resultDS = (HikariDataSource) resourcer.getDataSource();
+
+        // Assert
+        assertEquals(maxPoolSize, resultDS.getMaximumPoolSize());
+        assertEquals(minIdle, resultDS.getMinimumIdle());
+        assertEquals(connectionTimeout, resultDS.getConnectionTimeout());
+        assertEquals(idleTimeout, resultDS.getIdleTimeout());
+        assertEquals(maxLifeTime, resultDS.getMaxLifetime());
+    }
 }

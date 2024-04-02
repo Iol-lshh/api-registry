@@ -1,6 +1,8 @@
 package org.lshh.skeleton.core.resource.resourcer.implement;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import org.lshh.skeleton.core.resource.resourcer.Resourcer.ResourcerType;
@@ -11,6 +13,7 @@ import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerUpdateCommand;
 @Entity
 public class ResourcerContext {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String url;
