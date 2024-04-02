@@ -34,7 +34,8 @@ public class ResourcerProviderTest {
     public GenericContainer container = new MySQLContainer(DockerImageName.parse("mysql:5.7"))
             .withDatabaseName("test")
             .withUsername("testname")
-            .withPassword("password");
+            .withPassword("password")
+            .withReuse(true);
     @Mock
     ResourcerRepository repository;
     @InjectMocks

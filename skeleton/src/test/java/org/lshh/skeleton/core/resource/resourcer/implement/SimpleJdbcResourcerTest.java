@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.lshh.skeleton.core.resource.resourcer.RdbmsResourcer;
 import org.lshh.skeleton.core.resource.resourcer.dto.ResourcerCreateCommand;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.testcontainers.containers.GenericContainer;
@@ -26,7 +27,8 @@ public class SimpleJdbcResourcerTest {
     public GenericContainer container = new MySQLContainer(DockerImageName.parse("mysql:5.7"))
             .withDatabaseName("test")
             .withUsername("testname")
-            .withPassword("password");
+            .withPassword("password")
+            .withReuse(true);
 
     String host;
     Integer port;
@@ -40,7 +42,7 @@ public class SimpleJdbcResourcerTest {
     }
 
     @Test
-    public void testInitDataSource_h2_default() {
+    public void testInitDataSource_byH2() {
         Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
                 "h2test",
@@ -68,7 +70,34 @@ public class SimpleJdbcResourcerTest {
     }
 
     @Test
-    public void testInitDataSource_mysql() {
+    public void testDataSource_h2_default() {
+        Long resourceId = 1L;
+        ResourcerCreateCommand command = ResourcerCreateCommand.of(
+                "h2test",
+                "jdbc:h2:~/test",
+                "description",
+                RDBMS,
+                "sa",
+                "",
+                "org.h2.Driver"
+        );
+        ResourcerContext context = ResourcerContext.of(command).setId(resourceId);
+
+        RdbmsResourcer resourcer = SimpleJdbcResourcer.of(context);
+        DataSource dataSource = resourcer.getDataSource();
+
+        assertNotNull(dataSource);
+        assertEquals(resourceId, resourcer.getId());
+        assertEquals(command.getName(), context.getName());
+        assertEquals(command.getDescription(), context.getDescription());
+        assertEquals("jdbc:h2:~/test", ((HikariDataSource) dataSource).getJdbcUrl());
+        assertEquals("sa", ((HikariDataSource) dataSource).getUsername());
+        assertEquals("", ((HikariDataSource) dataSource).getPassword());
+        assertEquals("org.h2.Driver", ((HikariDataSource) dataSource).getDriverClassName());
+    }
+
+    @Test
+    public void testDataSource_mysql() {
         Long resourceId = 1L;
         ResourcerCreateCommand command = ResourcerCreateCommand.of(
                 "name",
@@ -81,8 +110,7 @@ public class SimpleJdbcResourcerTest {
         );
         ResourcerContext context = ResourcerContext.of(command).setId(resourceId);
 
-        SimpleJdbcResourcer resourcer = new SimpleJdbcResourcer(context);
-        resourcer.initDataSource();
+        RdbmsResourcer resourcer = SimpleJdbcResourcer.of(context);
         DataSource dataSource = resourcer.getDataSource();
 
         assertNotNull(dataSource);
