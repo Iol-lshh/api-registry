@@ -26,7 +26,7 @@ public class ResourcerContext {
         context.url = command.getUrl();
         context.description = command.getDescription();
         context.type = command.getType();
-        context.username = command.getName();
+        context.username = command.getUsername();
         context.password = command.getPassword();
         context.adaptorName = command.getAdaptorName();
         return context;
@@ -38,7 +38,7 @@ public class ResourcerContext {
         context.url = command.getUrl();
         context.description = command.getDescription();
         context.type = command.getType();
-        context.username = command.getName();
+        context.username = command.getUsername();
         context.password = command.getPassword();
         context.adaptorName = command.getAdaptorName();
         return context;

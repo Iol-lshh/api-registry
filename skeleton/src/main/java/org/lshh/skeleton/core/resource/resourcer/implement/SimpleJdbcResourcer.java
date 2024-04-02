@@ -10,7 +10,7 @@ public class SimpleJdbcResourcer implements RdbmsResourcer {
     DataSource dataSource;
     ResourcerContext context;
 
-    private SimpleJdbcResourcer(ResourcerContext context) {
+    public SimpleJdbcResourcer(ResourcerContext context) {
         this.context = context;
         initDataSource();
     }
