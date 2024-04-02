@@ -5,5 +5,11 @@ public interface Router {
     String getPath();
 
     Long getId();
+
+    String getName();
+
+    String getDescription();
+
+    Long getTaskId();
     // tryTask();
 }

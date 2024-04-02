@@ -11,5 +11,10 @@ public interface Query {
     static Query of(QueryContext queryContext, DataSource dataSource) {
         return new SimpleQuery(queryContext, dataSource);
     }
+
+    Long getId();
+    String getTitle();
+    String getBody();
+    Long getResourcerId();
     ArgumentsMap<String, Object> query(Map<String, Object> args);
 }

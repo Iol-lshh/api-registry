@@ -7,11 +7,11 @@ import org.lshh.skeleton.core.resource.resourcer.JdbcResourcer;
 import javax.sql.DataSource;
 
 public class SimpleJdbcResourcer implements JdbcResourcer {
-    DataSource dataSource;
-    ResourcerContext context;
+    private DataSource dataSource;
+    private final ResourcerContext CONTEXT;
 
     public SimpleJdbcResourcer(ResourcerContext context) {
-        this.context = context;
+        CONTEXT = context;
         initDataSource();
     }
     public static JdbcResourcer of(ResourcerContext context) {
@@ -21,16 +21,16 @@ public class SimpleJdbcResourcer implements JdbcResourcer {
     @Override
     public void initDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(context.getUrl());
-        config.setUsername(context.getUsername());
-        config.setPassword(context.getPassword());
-        config.setDriverClassName(context.getAdaptorName());
+        config.setJdbcUrl(CONTEXT.getUrl());
+        config.setUsername(CONTEXT.getUsername());
+        config.setPassword(CONTEXT.getPassword());
+        config.setDriverClassName(CONTEXT.getAdaptorName());
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(5);
         config.setConnectionTimeout(30000);
         config.setIdleTimeout(600000);
         config.setMaxLifetime(1800000);
-        this.dataSource = new HikariDataSource(config);
+        dataSource = new HikariDataSource(config);
     }
 
     @Override
@@ -51,11 +51,11 @@ public class SimpleJdbcResourcer implements JdbcResourcer {
 
     @Override
     public Long getId() {
-        return this.context.getId();
+        return CONTEXT.getId();
     }
 
     @Override
     public String getName() {
-        return this.context.getName();
+        return CONTEXT.getName();
     }
 }

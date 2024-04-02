@@ -1,4 +1,4 @@
-package org.lshh.skeleton.core.resource.query.dto.command;
+package org.lshh.skeleton.core.resource.query.dto;
 
 import lombok.Getter;
 
@@ -8,14 +8,14 @@ public class QueryUpdateCommand {
     String title;
     String body;
 
-    Long resourceId;
+    Long resourcerId;
 
-    public static QueryUpdateCommand of(Long id, String title, String body, Long resourceId) {
+    public static QueryUpdateCommand of(Long id, String title, String body, Long resourcerId) {
         QueryUpdateCommand command = new QueryUpdateCommand();
         command.id = id;
         command.title = title;
         command.body = body;
-        command.resourceId = resourceId;
+        command.resourcerId = resourcerId;
         return command;
     }
 }

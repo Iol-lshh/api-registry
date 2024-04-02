@@ -1,4 +1,4 @@
-package org.lshh.skeleton.core.resource.query.dto.command;
+package org.lshh.skeleton.core.resource.query.dto;
 
 import lombok.Getter;
 
@@ -7,13 +7,13 @@ public class QueryCreateCommand {
 
     String title;
     String body;
-    Long resourceId;
+    Long resourcerId;
 
-    public static QueryCreateCommand of(String title, String body, Long resourceId) {
+    public static QueryCreateCommand of(String title, String body, Long resourcerId) {
         QueryCreateCommand command = new QueryCreateCommand();
         command.title = title;
         command.body = body;
-        command.resourceId = resourceId;
+        command.resourcerId = resourcerId;
         return command;
     }
 }

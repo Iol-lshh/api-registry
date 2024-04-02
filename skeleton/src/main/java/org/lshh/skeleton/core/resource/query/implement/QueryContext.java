@@ -2,8 +2,8 @@ package org.lshh.skeleton.core.resource.query.implement;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.lshh.skeleton.core.resource.query.dto.command.QueryCreateCommand;
-import org.lshh.skeleton.core.resource.query.dto.command.QueryUpdateCommand;
+import org.lshh.skeleton.core.resource.query.dto.QueryCreateCommand;
+import org.lshh.skeleton.core.resource.query.dto.QueryUpdateCommand;
 
 @Getter
 @Entity
@@ -14,13 +14,13 @@ public class QueryContext {
     Long id;
     String title;
     String body;
-    Long resourceId;
+    Long resourcerId;
 
     public static QueryContext of(QueryCreateCommand command) {
         QueryContext context = new QueryContext();
         context.title = command.getTitle();
         context.body = command.getBody();
-        context.resourceId = command.getResourceId();
+        context.resourcerId = command.getResourcerId();
         return context;
     }
 
@@ -29,7 +29,12 @@ public class QueryContext {
         context.id = command.getId();
         context.title = command.getTitle();
         context.body = command.getBody();
-        context.resourceId = command.getResourceId();
+        context.resourcerId = command.getResourcerId();
         return context;
+    }
+
+    public QueryContext setId(Long id) {
+        this.id = id;
+        return this;
     }
 }

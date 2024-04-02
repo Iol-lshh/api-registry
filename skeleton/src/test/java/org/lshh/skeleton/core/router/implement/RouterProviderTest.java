@@ -13,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,26 +68,46 @@ public class RouterProviderTest {
     @Test
     @DisplayName("RouterProvider:create 성공")
     public void testCreate_createsRouter(){
+        Long id = 1L;
         RouterCreateCommand command = RouterCreateCommand.of("test-path", "test-method", "test-service", 1L);
-        RouterContext testContext = new RouterContext();
+        RouterContext testContext = RouterContext.of(command).setId(id);
 
-        when(routerRepository.create(any(RouterContext.class))).thenReturn(testContext);
+        when(routerRepository.create(any(RouterContext.class))).thenReturn(testContext.setId(id));
 
-        routerProvider.create(command);
+        Router router = routerProvider.create(command);
 
         verify(routerRepository, times(1)).create(any(RouterContext.class));
+        assertEquals(id, router.getId());
+        assertEquals(command.getName(), router.getName());
+        assertEquals(testContext.getName(), router.getName());
+        assertEquals(command.getPath(), router.getPath());
+        assertEquals(testContext.getPath(), router.getPath());
+        assertEquals(command.getDescription(), router.getDescription());
+        assertEquals(testContext.getDescription(), router.getDescription());
+        assertEquals(command.getTaskId(), router.getTaskId());
+        assertEquals(testContext.getTaskId(), router.getTaskId());
     }
 
     @Test
     @DisplayName("RouterProvider:update 성공")
     public void testUpdate_updatesRouter(){
-        RouterContext testContext = new RouterContext();
-        RouterUpdateCommand command = RouterUpdateCommand.of(1L, "test-path", "test-method", "test-service", 1L);
+        Long id = 1L;
+        RouterUpdateCommand command = RouterUpdateCommand.of(id, "test-path", "test-method", "test-service", 1L);
+        RouterContext testContext = RouterContext.of(command);
 
         when(routerRepository.update(any(RouterContext.class))).thenReturn(testContext);
 
-        routerProvider.update(command);
+        Router router = routerProvider.update(command);
 
         verify(routerRepository, times(1)).update(any(RouterContext.class));
+        assertEquals(id, router.getId());
+        assertEquals(command.getName(), router.getName());
+        assertEquals(testContext.getName(), router.getName());
+        assertEquals(command.getPath(), router.getPath());
+        assertEquals(testContext.getPath(), router.getPath());
+        assertEquals(command.getDescription(), router.getDescription());
+        assertEquals(testContext.getDescription(), router.getDescription());
+        assertEquals(command.getTaskId(), router.getTaskId());
+        assertEquals(testContext.getTaskId(), router.getTaskId());
     }
 }

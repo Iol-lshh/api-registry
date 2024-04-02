@@ -3,10 +3,10 @@ package org.lshh.skeleton.core.router.implement;
 import org.lshh.skeleton.core.router.Router;
 
 public class SimpleRouter implements Router{
-    private RouterContext context;
+    private final RouterContext CONTEXT;
 
     SimpleRouter(RouterContext context) {
-        this.context = context;
+        CONTEXT = context;
     }
     public static Router of(RouterContext context) {
         return new SimpleRouter(context);
@@ -14,13 +14,27 @@ public class SimpleRouter implements Router{
 
     @Override
     public String getPath() {
-        return context.getPath();
+        return CONTEXT.getPath();
     }
 
     @Override
     public Long getId() {
-        return context.getId();
+        return CONTEXT.getId();
     }
 
+    @Override
+    public String getName() {
+        return CONTEXT.getName();
+    }
+
+    @Override
+    public String getDescription() {
+        return CONTEXT.getDescription();
+    }
+
+    @Override
+    public Long getTaskId() {
+        return CONTEXT.getTaskId();
+    }
     // task id 요청
 }

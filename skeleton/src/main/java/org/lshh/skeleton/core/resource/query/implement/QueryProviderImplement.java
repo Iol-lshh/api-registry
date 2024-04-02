@@ -3,8 +3,8 @@ package org.lshh.skeleton.core.resource.query.implement;
 import org.lshh.skeleton.core.resource.query.Query;
 import org.lshh.skeleton.core.resource.query.QueryProvider;
 import org.lshh.skeleton.core.resource.query.QueryRepository;
-import org.lshh.skeleton.core.resource.query.dto.command.QueryCreateCommand;
-import org.lshh.skeleton.core.resource.query.dto.command.QueryUpdateCommand;
+import org.lshh.skeleton.core.resource.query.dto.QueryCreateCommand;
+import org.lshh.skeleton.core.resource.query.dto.QueryUpdateCommand;
 import org.lshh.skeleton.core.resource.query.exception.ResourceQueryException;
 
 import javax.sql.DataSource;
