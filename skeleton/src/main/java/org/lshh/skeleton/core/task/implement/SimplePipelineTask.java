@@ -2,7 +2,6 @@ package org.lshh.skeleton.core.task.implement;
 
 import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
 import org.lshh.skeleton.core.task.PipelineTask;
-import org.lshh.skeleton.core.task.implement.AbstractTask;
 import org.lshh.skeleton.core.task.Task;
 
 import java.util.List;
@@ -12,6 +11,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class SimplePipelineTask extends AbstractTask implements PipelineTask {
     Queue<Task> subTasks = new ConcurrentLinkedQueue<>();
+
+    protected SimplePipelineTask(TaskContext context, Map<String, Object> args) {
+        super(context, args);
+    }
+
+    public static PipelineTask of(TaskContext context, Map<String, Object> args) {
+        return new SimplePipelineTask(context, args);
+    }
 
     @Override
     public ArgumentsMap<String, Object> execute() {
@@ -28,6 +35,13 @@ public class SimplePipelineTask extends AbstractTask implements PipelineTask {
             task = nextTask;
         }
         return null;
+    }
+
+    @Override
+    public Task copy() {
+        PipelineTask task = SimplePipelineTask.of(context, args);
+        subTasks.forEach(subtask -> task.add(subtask.copy()));
+        return task;
     }
 
     @Override

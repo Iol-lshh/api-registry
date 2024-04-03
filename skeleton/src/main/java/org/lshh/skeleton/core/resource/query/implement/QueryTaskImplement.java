@@ -4,6 +4,7 @@ import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
 import org.lshh.skeleton.core.resource.query.Query;
 import org.lshh.skeleton.core.task.implement.AbstractTask;
 import org.lshh.skeleton.core.task.QueryTask;
+import org.lshh.skeleton.core.task.implement.TaskContext;
 
 import java.util.Map;
 
@@ -11,7 +12,9 @@ public abstract class QueryTaskImplement extends AbstractTask implements QueryTa
 
     protected final Query query;
 
-    QueryTaskImplement(Query query, Map<String, Object> args){
+
+    QueryTaskImplement(TaskContext context, Query query, Map<String, Object> args){
+        super(context, args);
         this.query = query;
         setArgs(args);
     }
@@ -20,4 +23,5 @@ public abstract class QueryTaskImplement extends AbstractTask implements QueryTa
     public ArgumentsMap<String, Object> execute() {
         return query.query(args);
     }
+
 }

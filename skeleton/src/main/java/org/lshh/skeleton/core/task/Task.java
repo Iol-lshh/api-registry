@@ -6,9 +6,20 @@ import java.util.Map;
 
 public interface Task {
     ArgumentsMap<String, Object> execute();
-    Task setArgs(String key, Object value) ;
+    Long rollbackTaskId();
+
+    Task setArgs(String key, Object value);
     Task setArgs(Map<String, Object> args);
+    TaskType getType();
     Map<String, Object> getResults();
+    Task copy();
+
+    default  <K extends Task> K as(Class<K> subClass){
+        if(!subClass.isInstance(this)){
+            throw new IllegalArgumentException("Task is not instance of " + subClass.getName());
+        }
+        return subClass.cast(this);
+    }
 
     enum TaskType{
         QUERY,

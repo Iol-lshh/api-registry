@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import org.lshh.skeleton.core.task.Task.TaskType;
+import org.lshh.skeleton.core.task.exception.TaskException;
 
 import java.util.List;
 
@@ -15,33 +16,49 @@ public class TaskContext {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    @NotNull
-    TaskType type;
+    String sortId;
+    String treeId; // treeId = parentTreeId + sortId
+    TaskType type;  // QUERY, PIPELINE, PARALLEL, LOCK
 
     Long queryId;
     Long resourceId;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_task_id")
-    TaskContext parentTask;
+    Long rollbackTaskId;    // rollback의 엔트리 task id
 
-    @OneToMany(mappedBy = "parentTask")
-    List<TaskContext> subTasks;
+    public TaskContext setTreeId(String parentTreeId){
+        this.treeId = parentTreeId + this.sortId;
+        return this;
+    }
+    public TaskContext setSortId(String sortId){
+        this.sortId = sortId;
+        if(treeId != null && treeId.length() >= sortId.length()){
+            this.setTreeId(this.treeId.substring(0, this.treeId.length() - this.sortId.length()));
+        }else{
+            setTreeId("");
+        }
+        return this;
+    }
 
-    public static TaskContext of(TaskType type, @Nullable Long queryId, @Nullable Long resourceId) {
+    public static TaskContext of(TaskType type, Long queryId, Long resourceId, String sortId, String parentTreeId, @Nullable Long rollbackTaskId) {
+        if(type != TaskType.QUERY){
+            throw new TaskException("TaskType is not QUERY");
+        }
         TaskContext context = new TaskContext();
         context.type = type;
         context.queryId = queryId;
         context.resourceId = resourceId;
+        context.rollbackTaskId = rollbackTaskId;
+        context.sortId = sortId;
+        context.setTreeId(parentTreeId);
         return context;
     }
 
-    public static TaskContext of(TaskType type, @Nullable TaskContext parentTask, @Nullable List<TaskContext> subTasks) {
+    public static TaskContext of(TaskType type, String sortId, String parentTreeId, @Nullable Long rollbackTaskId){
         TaskContext context = new TaskContext();
         context.type = type;
-        context.parentTask = parentTask;
-        context.subTasks = subTasks;
+        context.rollbackTaskId = rollbackTaskId;
+        context.sortId = sortId;
+        context.setTreeId(parentTreeId);
         return context;
     }
 }

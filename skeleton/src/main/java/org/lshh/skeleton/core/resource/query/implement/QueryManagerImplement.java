@@ -22,6 +22,7 @@ public class QueryManagerImplement implements QueryManager {
         return new QueryManagerImplement(provider);
     }
 
+    @Override
     public Query find(Long id, DataSource dataSource) {
         // cache
         if(isCached(id)){

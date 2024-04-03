@@ -6,6 +6,8 @@ import org.lshh.skeleton.core.resource.query.dto.QueryUpdateCommand;
 import javax.sql.DataSource;
 
 public interface QueryManager {
+    Query find(Long id, DataSource dataSource);
+
     Query create(QueryCreateCommand command, DataSource dataSource);
 
     Query update(QueryUpdateCommand command, DataSource dataSource);

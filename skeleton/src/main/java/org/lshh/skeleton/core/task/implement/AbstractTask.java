@@ -11,6 +11,12 @@ import java.util.Map;
 public abstract class AbstractTask implements Task {
     protected ArgumentsHashMap<String, Object> args = new ArgumentsHashMap<String, Object>();
     protected Map<String, Object> results = new HashMap<>();
+    protected TaskContext context;
+
+    protected AbstractTask(TaskContext context, Map<String, Object> args){
+        this.context = context;
+        setArgs(args);
+    }
 
     @Override
     public abstract ArgumentsMap<String, Object> execute();
@@ -33,9 +39,14 @@ public abstract class AbstractTask implements Task {
             try {
                 setArgs(execute());
             } catch (Exception e) {
-                throw new TaskException("Task execute failed");
+                throw new TaskException("Task execute failed - " + e.getMessage());
             }
         }
         return results;
+    }
+
+    @Override
+    public Long rollbackTaskId() {
+        return context.getRollbackTaskId();
     }
 }

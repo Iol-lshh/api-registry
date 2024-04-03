@@ -7,15 +7,15 @@ public interface Resourcer {
     Long getId();
     String getName();
 
-    default <K extends Resourcer> K as(Class<K> type){
-        if(type.isInstance(this)){
-            return type.cast(this);
-        }else{
-            throw new IllegalArgumentException("Resourcer type is not matched");
+    default <K extends Resourcer> K as(Class<K> subClass){
+        if(!subClass.isInstance(this)){
+            throw new IllegalArgumentException("Task is not instance of " + subClass.getName());
         }
+        return subClass.cast(this);
     }
 
     enum ResourcerType{
-        RDBMS, API
+        RDBMS,
+        API
     }
 }
