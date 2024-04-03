@@ -21,7 +21,7 @@ public class TaskContext {
     TaskType type;  // QUERY, PIPELINE, PARALLEL, LOCK
 
     Long queryId;
-    Long resourceId;
+    Long resourcerId;
 
     Long rollbackTaskId;    // rollback의 엔트리 task id
 
@@ -39,14 +39,14 @@ public class TaskContext {
         return this;
     }
 
-    public static TaskContext of(TaskType type, Long queryId, Long resourceId, String sortId, String parentTreeId, @Nullable Long rollbackTaskId) {
+    public static TaskContext of(TaskType type, Long queryId, Long resourcerId, String sortId, String parentTreeId, @Nullable Long rollbackTaskId) {
         if(type != TaskType.QUERY){
             throw new TaskException("TaskType is not QUERY");
         }
         TaskContext context = new TaskContext();
         context.type = type;
         context.queryId = queryId;
-        context.resourceId = resourceId;
+        context.resourcerId = resourcerId;
         context.rollbackTaskId = rollbackTaskId;
         context.sortId = sortId;
         context.setTreeId(parentTreeId);

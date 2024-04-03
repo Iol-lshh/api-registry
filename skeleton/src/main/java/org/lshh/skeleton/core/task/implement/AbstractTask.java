@@ -49,4 +49,9 @@ public abstract class AbstractTask implements Task {
     public Long rollbackTaskId() {
         return context.getRollbackTaskId();
     }
+
+    @Override
+    public String getTreeId() {
+        return context.getTreeId();
+    }
 }

@@ -21,6 +21,10 @@ public interface Task {
         return subClass.cast(this);
     }
 
+    Long getId();
+
+    String getTreeId();
+
     enum TaskType{
         QUERY,
         PIPELINE,

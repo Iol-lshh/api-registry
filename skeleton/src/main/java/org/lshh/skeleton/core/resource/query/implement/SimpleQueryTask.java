@@ -20,4 +20,9 @@ public class SimpleQueryTask extends QueryTaskImplement implements QueryTask {
     public QueryTask copy() {
         return SimpleQueryTask.of(context, query, args);
     }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-package org.lshh.skeleton.infrastructure.resource;
+package org.lshh.skeleton.sample.infrastructure.resource;
 
 import lombok.RequiredArgsConstructor;
 import org.lshh.skeleton.core.resource.query.QueryRepository;

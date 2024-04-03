@@ -1,4 +1,4 @@
-package org.lshh.skeleton.infrastructure.router;
+package org.lshh.skeleton.sample.infrastructure.router;
 
 import lombok.RequiredArgsConstructor;
 import org.lshh.skeleton.core.router.implement.RouterContext;

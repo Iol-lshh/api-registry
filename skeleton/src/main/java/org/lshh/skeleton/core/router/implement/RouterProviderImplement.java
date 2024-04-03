@@ -10,24 +10,24 @@ import java.util.List;
 import java.util.Optional;
 
 public class RouterProviderImplement implements RouterProvider {
-    private final RouterRepository routerRepository;
+    private final RouterRepository repository;
 
-    private RouterProviderImplement(RouterRepository routerRepository) {
-        this.routerRepository = routerRepository;
+    private RouterProviderImplement(RouterRepository repository) {
+        this.repository = repository;
     }
-    public static RouterProvider of(RouterRepository routerRepository) {
-        return new RouterProviderImplement(routerRepository);
+    public static RouterProvider of(RouterRepository repository) {
+        return new RouterProviderImplement(repository);
     }
 
     @Override
     public Optional<Router> findByPath(String path){
-        return routerRepository.findByPath(path)
+        return repository.findByPath(path)
                 .map(Routers::of);
     }
 
     @Override
     public List<Router> findAll() {
-        return routerRepository.findAll()
+        return repository.findAll()
                 .stream()
                 .map(Routers::of)
                 .toList();
@@ -36,14 +36,14 @@ public class RouterProviderImplement implements RouterProvider {
     @Override
     public Router create(RouterCreateCommand command) {
         RouterContext newOne = RouterContext.of(command);
-        newOne = routerRepository.create(newOne);
+        newOne = repository.create(newOne);
         return Routers.of(newOne);
     }
 
     @Override
     public Router update(RouterUpdateCommand command) {
         RouterContext renewal = RouterContext.of(command);
-        renewal = routerRepository.update(renewal);
+        renewal = repository.update(renewal);
         return Routers.of(renewal);
     }
 }
