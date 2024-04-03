@@ -9,13 +9,17 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
-public class SimpleQuery implements Query {
+public class SimpleJdbcQuery implements Query {
     private final QueryContext CONTEXT;
     private final NamedParameterJdbcTemplate JDBC_TEMPLATE;
 
-    public SimpleQuery(QueryContext context, DataSource dataSource){
+    public SimpleJdbcQuery(QueryContext context, DataSource dataSource){
         CONTEXT = context;
         JDBC_TEMPLATE = new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    public static Query of(QueryContext context, DataSource dataSource){
+        return new SimpleJdbcQuery(context, dataSource);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class SimpleQuery implements Query {
     public ArgumentsMap<String, Object> query(Map<String, Object> args) {
         List<Map<String, Object>> list = JDBC_TEMPLATE.queryForList(CONTEXT.getBody(), args);
         ArgumentsMap<String, Object> result = new ArgumentsHashMap<>();
-        result.put("result", list);
+        result.put(getTitle()+getId(), list);
         return result;
     }
 }
