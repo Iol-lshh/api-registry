@@ -7,11 +7,9 @@ import org.lshh.skeleton.core.resource.query.implement.SimpleQueryTask;
 import org.lshh.skeleton.core.resource.resourcer.JdbcResourcer;
 import org.lshh.skeleton.core.resource.resourcer.ResourcerManager;
 import org.lshh.skeleton.core.resource.query.QueryManager;
-import org.lshh.skeleton.core.task.PipelineTask;
-import org.lshh.skeleton.core.task.QueryTask;
-import org.lshh.skeleton.core.task.TaskProvider;
-import org.lshh.skeleton.core.task.TaskRepository;
+import org.lshh.skeleton.core.task.*;
 import org.lshh.skeleton.core.task.dto.TaskCreateCommand;
+import org.lshh.skeleton.core.task.dto.TaskUpdateCommand;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -143,5 +141,52 @@ public class TaskProviderTest {
 
         assertNotNull(pipelineTask);
         assertEquals(2, pipelineTask.getSubTasks().size());
+    }
+
+    @Test
+    public void create() {
+        Long id = 1L;
+        TaskCreateCommand command = TaskCreateCommand.of("q1", "r1", QUERY, 1L, 1L, 1011L);
+        TaskContext stubContext = TaskContext.of(command);
+        when(repository.create(any(TaskContext.class))).thenReturn(stubContext.setId(id));
+
+        TaskContext resultContext = mockTaskProvider.create(command);
+
+        verify(repository).create(any(TaskContext.class));
+        assertEquals(resultContext.getId(), id);
+    }
+
+    @Test
+    public void update() {
+        Long id = 1L;
+        TaskUpdateCommand command = TaskUpdateCommand.of(id,"q1", "r1", QUERY, 1L, 1L, 1011L);
+        TaskContext stubContext = TaskContext.of(command);
+        when(repository.update(any(TaskContext.class))).thenReturn(stubContext);
+
+        TaskContext resultContext = mockTaskProvider.update(command);
+
+        verify(repository).update(any(TaskContext.class));
+        assertEquals(resultContext.getId(), id);
+    }
+
+
+    ///////////////////////
+
+    @Test
+    public void find() {
+        // Prepare test data
+        Long testContextId = 123L;
+        TaskCreateCommand command = TaskCreateCommand.of("t1", "00", QUERY, 123L, 456L, 789L);
+        TaskContext stubTaskContext = TaskContext.of(command).setId(testContextId);
+        Task mockTask = mock(Task.class);
+        doReturn(Optional.of(stubTaskContext)).when(spyTaskProvider).findContext(anyLong());
+        doReturn(List.of()).when(spyTaskProvider).findChildContextList(anyLong());
+        doReturn(mockTask).when(spyTaskProvider).generate(any(), any());    // 이럼 의미가 있을까..? 행위 검증 의미..?
+
+        // Execution
+        Optional<Task> resultOptional = spyTaskProvider.find(testContextId);
+
+        // Verification
+        assertTrue(resultOptional.isPresent());
     }
 }
