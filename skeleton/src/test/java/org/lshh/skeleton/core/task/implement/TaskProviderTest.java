@@ -1,5 +1,6 @@
 package org.lshh.skeleton.core.task.implement;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.lshh.skeleton.core.resource.query.Query;
@@ -173,6 +174,7 @@ public class TaskProviderTest {
     ///////////////////////
 
     @Test
+    @DisplayName("find success - Mock test with Spy")
     public void find() {
         // Prepare test data
         Long testContextId = 123L;
@@ -188,5 +190,8 @@ public class TaskProviderTest {
 
         // Verification
         assertTrue(resultOptional.isPresent());
+        verify(spyTaskProvider, times(1)).findContext(testContextId);
+        verify(spyTaskProvider, times(1)).findChildContextList(testContextId);
+        verify(spyTaskProvider, times(1)).generate(any(), any());
     }
 }
