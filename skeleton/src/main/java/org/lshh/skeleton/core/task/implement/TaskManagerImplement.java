@@ -16,7 +16,7 @@ import java.util.Optional;
 public class TaskManagerImplement implements TaskManager {
 
     private final Map<Long, Task> emptyTaskCacheMap = new HashMap<>();
-    private TaskProvider provider;
+    private final TaskProvider provider;
 
     public TaskManagerImplement(TaskProvider provider){
         this.provider = provider;
@@ -61,19 +61,22 @@ public class TaskManagerImplement implements TaskManager {
     }
 
     @Override
-    public Task create(TaskCreateCommand command){
-        Task task = provider.create(command);
-        return task;
+    public Integer create(TaskCreateCommand command){
+        TaskContext context = provider.create(command);
+        String rootTreeId = context.getTreeId().substring(0, 2);
+        refresh(rootTreeId);
+        return 1;
     }
 
     @Override
-    public Task update(TaskUpdateCommand command){
-        Task task = provider.update(command);
-        String treeId = task.getTreeId().substring(0, 3);
-        refresh(treeId);
-        return task;
+    public Integer update(TaskUpdateCommand command){
+        TaskContext context = provider.update(command);
+        String rootTreeId = context.getTreeId().substring(0, 2);
+        refresh(rootTreeId);
+        return 1;
     }
 
+    @Override
     public Task refresh(String treeId){
         Optional<Task> mayTask = provider.findByTreeId(treeId);
         if(mayTask.isPresent()){

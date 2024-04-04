@@ -5,6 +5,7 @@ import org.lshh.skeleton.core.resource.argument.ArgumentsMap;
 import java.util.Map;
 
 public interface Task {
+
     ArgumentsMap<String, Object> execute();
     Long rollbackTaskId();
 

@@ -21,8 +21,4 @@ public class SimpleQueryTask extends QueryTaskImplement implements QueryTask {
         return SimpleQueryTask.of(context, query, args);
     }
 
-    @Override
-    public Long getId() {
-        return null;
-    }
 }

@@ -51,6 +51,10 @@ public abstract class AbstractTask implements Task {
     }
 
     @Override
+    public Long getId() {
+        return context.getId();
+    }
+    @Override
     public String getTreeId() {
         return context.getTreeId();
     }

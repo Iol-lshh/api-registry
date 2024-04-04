@@ -45,11 +45,6 @@ public class SimplePipelineTask extends AbstractTask implements PipelineTask {
     }
 
     @Override
-    public Long getId() {
-        return null;
-    }
-
-    @Override
     public Task add(Task subTask) {
         subTasks.add(subTask);
         return this;

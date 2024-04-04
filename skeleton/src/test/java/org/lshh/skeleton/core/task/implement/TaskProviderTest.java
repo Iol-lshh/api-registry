@@ -1,0 +1,147 @@
+package org.lshh.skeleton.core.task.implement;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.lshh.skeleton.core.resource.query.Query;
+import org.lshh.skeleton.core.resource.query.implement.SimpleQueryTask;
+import org.lshh.skeleton.core.resource.resourcer.JdbcResourcer;
+import org.lshh.skeleton.core.resource.resourcer.ResourcerManager;
+import org.lshh.skeleton.core.resource.query.QueryManager;
+import org.lshh.skeleton.core.task.PipelineTask;
+import org.lshh.skeleton.core.task.QueryTask;
+import org.lshh.skeleton.core.task.TaskProvider;
+import org.lshh.skeleton.core.task.TaskRepository;
+import org.lshh.skeleton.core.task.dto.TaskCreateCommand;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import javax.sql.DataSource;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.lshh.skeleton.core.task.Task.TaskType.PIPELINE;
+import static org.lshh.skeleton.core.task.Task.TaskType.QUERY;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+public class TaskProviderTest {
+
+    @Mock
+    TaskRepository repository;
+
+    @Mock
+    ResourcerManager resourcerManager;
+    @Mock
+    QueryManager queryManager;
+
+    @InjectMocks
+    TaskProviderImplement mockTaskProvider;
+
+    @Spy
+    TaskProvider spyTaskProvider = TaskProviderImplement.of(repository, resourcerManager, queryManager);
+
+
+    @Test
+    public void findContext() {
+        // Prepare test data
+        Long testContextId = 123L;
+        TaskCreateCommand command = TaskCreateCommand.of("t1", "00", QUERY, 123L, 456L, 789L);
+        TaskContext stubTaskContext = TaskContext.of(command).setId(testContextId);
+        when(repository.findContext(anyLong())).thenReturn(Optional.of(stubTaskContext));
+
+        // Execution
+        Optional<TaskContext> resultOptional = mockTaskProvider.findContext(testContextId);
+
+        // Verification
+        assertTrue(resultOptional.isPresent());
+        TaskContext result = resultOptional.get();
+        assertEquals(stubTaskContext.getId(), result.getId());
+
+        verify(repository, times(1)).findContext(testContextId);
+    }
+
+    @Test
+    void findChildContextList() {
+        TaskContext mockContext = mock(TaskContext.class);
+        when(repository.findByStartId(anyLong())).thenReturn(Arrays.asList(mockContext));
+
+        List<TaskContext> result = mockTaskProvider.findChildContextList(1L);
+
+        assertEquals(1, result.size());
+        assertEquals(mockContext, result.getFirst());
+    }
+
+    @Test
+    public void findContextByTreeId() {
+        when(repository.findByTreeId(anyString())).thenReturn(Optional.of(new TaskContext()));
+
+        Optional<TaskContext> found = mockTaskProvider.findContextByTreeId("testId");
+
+        assertTrue(found.isPresent());
+    }
+
+    @Test
+    public void generateQueryTask() {
+        Long taskId = 123L;
+        TaskCreateCommand command = TaskCreateCommand.of("t1", "00", QUERY, 123L, 456L, 789L);
+        TaskContext taskContext = TaskContext.of(command).setId(taskId);
+        Query mockQuery = mock(Query.class);
+        JdbcResourcer mockResourcer = mock(JdbcResourcer.class);
+        DataSource mockDataSource = mock(DataSource.class);
+        when(resourcerManager.find(anyLong())).thenReturn(mockResourcer);
+        when(mockResourcer.getDataSource()).thenReturn(mockDataSource);
+        when(mockResourcer.as(any())).thenReturn(mockResourcer);
+        when(queryManager.find(anyLong(), any(DataSource.class))).thenReturn(mockQuery);
+
+        QueryTask result = mockTaskProvider.generateQueryTask(taskContext);
+
+        assertEquals(SimpleQueryTask.class, result.getClass());
+    }
+
+    @Test
+    public void filterChildren() {
+        TaskCreateCommand rootCommand = TaskCreateCommand.of("r1", "", PIPELINE, 1001L);
+        TaskContext rootContext = TaskContext.of(rootCommand).setId(1L);
+        // child1
+        TaskCreateCommand childCommand1 = TaskCreateCommand.of("q1", "r1", QUERY, 1L, 1L, 1011L);
+        TaskContext childContext1 = TaskContext.of(childCommand1).setId(11L);
+        QueryTask childQueryTask1 = SimpleQueryTask.of(childContext1, mock(Query.class), Map.of());
+        // child2
+        TaskCreateCommand childCommand2 = TaskCreateCommand.of("q2", "r1", QUERY, 2L, 1L, 1012L);
+        TaskContext childContext2 = TaskContext.of(childCommand2).setId(12L);
+        QueryTask childQueryTask2 = SimpleQueryTask.of(childContext2, mock(Query.class), Map.of());
+        // list
+        List<TaskContext> childContexts = List.of(childContext1, childContext2);
+
+        List<TaskContext> actual = mockTaskProvider.filterChildren(rootContext, childContexts);
+
+        assertEquals(childContexts.size(), actual.size());
+    }
+
+
+
+    @Test
+    public void generatePipelineTask() {
+        TaskCreateCommand rootCommand = TaskCreateCommand.of("r1", "", PIPELINE, 1001L);
+        TaskContext rootContext = TaskContext.of(rootCommand).setId(1L);
+        // child1
+        TaskCreateCommand childCommand1 = TaskCreateCommand.of("q1", "r1", QUERY, 1L, 1L, 1011L);
+        TaskContext childContext1 = TaskContext.of(childCommand1).setId(11L);
+        QueryTask childQueryTask1 = SimpleQueryTask.of(childContext1, mock(Query.class), Map.of());
+        doReturn(childQueryTask1).when(spyTaskProvider).generateQueryTask(eq(childContext1));
+        // child2
+        TaskCreateCommand childCommand2 = TaskCreateCommand.of("q2", "r1", QUERY, 2L, 1L, 1012L);
+        TaskContext childContext2 = TaskContext.of(childCommand2).setId(12L);
+        QueryTask childQueryTask2 = SimpleQueryTask.of(childContext2, mock(Query.class), Map.of());
+        doReturn(childQueryTask2).when(spyTaskProvider).generateQueryTask(eq(childContext2));
+        // list
+        List<TaskContext> childContexts = List.of(childContext1, childContext2);
+
+        PipelineTask pipelineTask = spyTaskProvider.generatePipelineTask(rootContext, childContexts);
+
+        assertNotNull(pipelineTask);
+        assertEquals(2, pipelineTask.getSubTasks().size());
+    }
+}

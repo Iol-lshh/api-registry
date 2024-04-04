@@ -1,6 +1,5 @@
 package org.lshh.skeleton.core.task;
 
-import org.lshh.skeleton.core.task.dto.TaskCreateCommand;
 import org.lshh.skeleton.core.task.implement.TaskContext;
 
 import java.util.List;
@@ -13,7 +12,9 @@ public interface TaskRepository {
 
     List<TaskContext> findAllRoute();
 
-    Task create(TaskCreateCommand command);
+    Optional<TaskContext> findByTreeId(String treeId);
 
-    Optional<Task> findByTreeId(String treeId);
+    TaskContext create(TaskContext newOne);
+
+    TaskContext update(TaskContext renewal);
 }
