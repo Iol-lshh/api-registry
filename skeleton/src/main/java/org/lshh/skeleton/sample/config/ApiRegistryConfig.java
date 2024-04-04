@@ -17,7 +17,9 @@ import org.lshh.skeleton.core.router.implement.RouterManagerImplement;
 import org.lshh.skeleton.core.router.implement.RouterProviderImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class ApiRegistryConfig {
     @Bean
     public RouterProvider routerProvider(@Autowired RouterRepository repository) {
