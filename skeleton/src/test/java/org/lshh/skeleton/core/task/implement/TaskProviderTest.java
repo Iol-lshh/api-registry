@@ -174,7 +174,7 @@ public class TaskProviderTest {
     ///////////////////////
 
     @Test
-    @DisplayName("find success - Mock test with Spy") // todo 실제 스텁 테스트는 통테로..
+    @DisplayName(value = "find success - Mock test with Spy") // todo 실제 스텁 테스트는 통테로..
     public void find() {
         // Prepare test data
         Long testContextId = 123L;
@@ -193,5 +193,48 @@ public class TaskProviderTest {
         verify(spyTaskProvider, times(1)).findContext(testContextId);
         verify(spyTaskProvider, times(1)).findChildContextList(testContextId);
         verify(spyTaskProvider, times(1)).generate(any(), any());
+    }
+
+    @Test
+    @DisplayName(value = "findByTreeId success - Mock test with Spy")
+    void findByTreeId() {
+        String rootTreeId = "00";
+        TaskCreateCommand rootCommand = TaskCreateCommand.of(rootTreeId, "", PIPELINE, 789L);
+        TaskContext rootStubTaskContext = TaskContext.of(rootCommand).setId(1L);
+
+        Long subContextId = 123L;
+        TaskCreateCommand subCommand = TaskCreateCommand.of("t1", "00", QUERY, 123L, 456L, 789L);
+        TaskContext stubTaskContext = TaskContext.of(subCommand).setId(subContextId);
+        doReturn(Optional.of(rootStubTaskContext)).when(spyTaskProvider).findContextByTreeId(rootTreeId);
+        doReturn(List.of(rootStubTaskContext, stubTaskContext)).when(spyTaskProvider).findChildContextList(anyLong());
+        doReturn(mock(QueryTask.class)).when(spyTaskProvider).generateQueryTask(any());
+
+        Optional<Task> task = spyTaskProvider.findByTreeId(rootTreeId);
+
+        assertTrue(task.isPresent());
+        verify(spyTaskProvider, times(1)).findContextByTreeId(rootTreeId);
+        verify(spyTaskProvider, times(1)).findChildContextList(rootStubTaskContext.getId());
+        verify(spyTaskProvider, times(2)).generate(any(), any());
+    }
+
+    @Test
+    void testFindAll() {
+        String rootTreeId = "00";
+        TaskCreateCommand rootCommand = TaskCreateCommand.of(rootTreeId, "", PIPELINE, 789L);
+        TaskContext rootStubTaskContext = TaskContext.of(rootCommand).setId(1L);
+        Long subContextId = 123L;
+        String subTreeId = "00t1";
+        TaskCreateCommand subCommand = TaskCreateCommand.of("t1", "00", QUERY, 123L, 456L, 789L);
+        TaskContext stubTaskContext = TaskContext.of(subCommand).setId(subContextId);
+        doReturn(List.of(rootStubTaskContext)).when(spyTaskProvider).findAllRouteContext();
+        doReturn(List.of(rootStubTaskContext, stubTaskContext)).when(spyTaskProvider).findChildContextList(anyLong());
+        doReturn(mock(QueryTask.class)).when(spyTaskProvider).generateQueryTask(any());
+
+        // Running test
+        List<Task> taskList = spyTaskProvider.findAll();
+
+        // Checking result
+        assertNotNull(taskList);
+        assertEquals(1, taskList.size());
     }
 }

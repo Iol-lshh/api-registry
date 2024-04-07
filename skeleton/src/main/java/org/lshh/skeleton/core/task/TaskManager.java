@@ -16,5 +16,5 @@ public interface TaskManager {
 
     Task refresh(String treeId);
     void clearCache();
-    boolean isCached(String path);
+    boolean isCached(Long id);
 }

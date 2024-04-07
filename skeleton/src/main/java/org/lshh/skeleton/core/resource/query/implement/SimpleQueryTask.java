@@ -6,7 +6,7 @@ import org.lshh.skeleton.core.task.implement.TaskContext;
 
 import java.util.Map;
 
-public class SimpleQueryTask extends QueryTaskImplement implements QueryTask {
+public class SimpleQueryTask extends QueryTaskImplement {
 
     SimpleQueryTask(TaskContext context, Query query, Map<String, Object> args){
         super(context, query, args);
@@ -18,6 +18,7 @@ public class SimpleQueryTask extends QueryTaskImplement implements QueryTask {
 
     @Override
     public QueryTask copy() {
+        // todo args 깊은 복사
         return SimpleQueryTask.of(context, query, args);
     }
 

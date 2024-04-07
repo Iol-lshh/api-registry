@@ -94,7 +94,7 @@ public class TaskManagerImplement implements TaskManager {
     }
 
     @Override
-    public boolean isCached(String path) {
-        return emptyTaskCacheMap.containsKey(path);
+    public boolean isCached(Long id) {
+        return emptyTaskCacheMap.containsKey(id);
     }
 }

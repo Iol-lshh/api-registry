@@ -39,6 +39,7 @@ public class SimplePipelineTask extends AbstractTask implements PipelineTask {
 
     @Override
     public Task copy() {
+        // todo args 깊은 복사
         PipelineTask task = SimplePipelineTask.of(context, args);
         subTasks.forEach(subtask -> task.add(subtask.copy()));
         return task;

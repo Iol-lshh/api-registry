@@ -1,11 +1,12 @@
-package org.lshh.skeleton.core.port;
+package org.lshh.skeleton.core.port.implement;
 
+import org.lshh.skeleton.core.port.PortManager;
 import org.lshh.skeleton.core.resource.query.QueryManager;
 import org.lshh.skeleton.core.resource.resourcer.ResourcerManager;
 import org.lshh.skeleton.core.router.RouterManager;
 import org.lshh.skeleton.core.task.TaskManager;
 
-public class PortManagerImplement implements PortManager{
+public abstract class PortManagerImplement implements PortManager {
     protected RouterManager routerManager;
     protected TaskManager taskManager;
     protected QueryManager queryManager;
