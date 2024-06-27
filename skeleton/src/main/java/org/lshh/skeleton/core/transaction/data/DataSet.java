@@ -21,9 +21,9 @@ public class DataSet {
     }
 
     public JoinSet leftJoin(DataSet right){
-        return LeftJoinSet.of(this, right);
+        return LeftJoinSetImplement.of(this, right);
     }
     public JoinSet innerJoin(DataSet right){
-        return InnerJoinSet.of(this, right);
+        return InnerJoinSetImplement.of(this, right);
     }
 }

@@ -22,7 +22,7 @@ public abstract class JoinSetImplement implements JoinSet{
     public abstract JoinSet on(String key, String value);
 
     @Override
-    public DataSet getResult() {
+    public DataSet toDataSet() {
         return result;
     }
 }
