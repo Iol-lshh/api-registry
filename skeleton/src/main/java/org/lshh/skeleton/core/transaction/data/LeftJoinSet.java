@@ -3,16 +3,10 @@ package org.lshh.skeleton.core.transaction.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeftJoinSet implements JoinSet{
-    private final DataSet left;
-    private final DataSet right;
-    private final DataSet result;
-    private final List<Integer> joinedIndex = new ArrayList<>();
+public class LeftJoinSet extends JoinSetImplement {
 
     public LeftJoinSet(DataSet left, DataSet right) {
-        this.left = left;
-        this.right = right;
-        this.result = new DataSet(new ArrayList<>(left.columns));
+        super(left, right, new DataSet(new ArrayList<>(left.columns)));
     }
 
     public static JoinSet of(DataSet left, DataSet right) {
@@ -21,14 +15,14 @@ public class LeftJoinSet implements JoinSet{
 
     @Override
     public JoinSet on(String key, String value) {
-        int leftIndex = left.columns.indexOf(key);
-        int rightIndex = right.columns.indexOf(value);
+        int leftIndex = this.left.columns.indexOf(key);
+        int rightIndex = this.right.columns.indexOf(value);
         if(leftIndex == -1 || rightIndex == -1){
             throw new IllegalArgumentException("Key not found");
         }
-        for(int i = 0; i < left.data.size(); i++){
-            for(int j = 0; j < right.data.size(); j++){
-                if(left.data.get(i).get(leftIndex).equals(right.data.get(j).get(rightIndex))){
+        for(int i = 0; i < this.left.data.size(); i++){
+            for(int j = 0; j < this.right.data.size(); j++){
+                if(this.left.data.get(i).get(leftIndex).equals(this.right.data.get(j).get(rightIndex))){
                     joinedIndex.add(i);
                     break;
                 }
@@ -36,24 +30,20 @@ public class LeftJoinSet implements JoinSet{
         }
 
         joinedIndex.forEach(index -> {
-            List<Object> row = new ArrayList<>(left.data.get(index));
+            List<Object> row = new ArrayList<>(this.left.data.get(index));
             boolean found = false;
-            for(int i = 0; i < right.data.size(); i++){
-                if(left.data.get(index).get(leftIndex).equals(right.data.get(i).get(rightIndex))){
-                    row.addAll(right.data.get(i));
+            for(int i = 0; i < this.right.data.size(); i++){
+                if(this.left.data.get(index).get(leftIndex).equals(this.right.data.get(i).get(rightIndex))){
+                    row.addAll(this.right.data.get(i));
                     found = true;
                     break;
                 }
             }
             if(!found){
-                row.addAll(new ArrayList<>(right.columns.size()));
+                row.addAll(new ArrayList<>(this.right.columns.size()));
             }
-            result.data.add(row);
+            this.result.data.add(row);
         });
         return this;
-    }
-
-    public DataSet getResult() {
-        return result;
     }
 }

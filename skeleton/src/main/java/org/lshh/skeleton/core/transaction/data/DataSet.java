@@ -16,6 +16,10 @@ public class DataSet {
         this.data = new ArrayList<>();
     }
 
+    public static DataSet of(List<String> columns) {
+        return new DataSet(columns);
+    }
+
     public JoinSet leftJoin(DataSet right){
         return LeftJoinSet.of(this, right);
     }
