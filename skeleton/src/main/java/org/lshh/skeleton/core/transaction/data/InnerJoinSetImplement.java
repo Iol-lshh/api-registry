@@ -6,38 +6,30 @@ import java.util.List;
 public class InnerJoinSetImplement extends JoinSetImplement implements InnerJoinSet {
 
     public InnerJoinSetImplement(DataSet left, DataSet right) {
-        super(left, right, new DataSet(new ArrayList<>()));
-    }
-
-    public static JoinSet of(DataSet left, DataSet right) {
-        return new InnerJoinSetImplement(left, right);
+        super(left, right);
     }
 
     @Override
-    public JoinSet on(String leftKey, String rightKey){
-        int leftIndex = this.left.columns.indexOf(leftKey);
-        int rightIndex = this.right.columns.indexOf(rightKey);
-        if(leftIndex == -1 || rightIndex == -1){
-            throw new IllegalArgumentException("Key not found");
-        }
-        for(int i = 0; i < this.left.data.size(); i++){
-            for(int j = 0; j < this.right.data.size(); j++){
-                if(this.left.data.get(i).get(leftIndex).equals(this.right.data.get(j).get(rightIndex))){
-                    joinedIndex.add(i);
-                }
+    public DataSet computeJoin(){
+        DataSet rawResult = new DataSet(new ArrayList<>());
+        for(int i = 0; i < left.data.size(); i++){
+            for(int j = 0; j < right.data.size(); j++){
+                int _i = i;
+                int _j = j;
+                this.joinColumns.forEach(indexes -> {
+                    int leftIndex = indexes.get(0);
+                    int rightIndex = indexes.get(1);
+                    if(left.data.get(_i).get(leftIndex)
+                            .equals(right.data.get(_j).get(rightIndex))
+                    ){
+                        List<Object> row = new ArrayList<>();
+                        row.addAll(left.data.get(_i));
+                        row.addAll(right.data.get(_j));
+                        rawResult.data.add(row);
+                    }
+                });
             }
         }
-
-        joinedIndex.forEach(index -> {
-            List<Object> row = new ArrayList<>(this.left.data.get(index));
-            for(int i = 0; i < this.right.data.size(); i++){
-                if(this.left.data.get(index).get(leftIndex).equals(this.right.data.get(i).get(rightIndex))){
-                    row.addAll(this.right.data.get(i));
-                }
-            }
-            this.result.data.add(row);
-        });
-
-        return this;
+        return rawResult;
     }
 }
