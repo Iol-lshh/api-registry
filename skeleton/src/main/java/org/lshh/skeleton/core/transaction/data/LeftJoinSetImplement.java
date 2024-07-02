@@ -11,29 +11,33 @@ public class LeftJoinSetImplement extends JoinSetImplement implements LeftJoinSe
     }
 
     @Override
-    public DataSet computeJoin(){
-        DataSet rawResult = new DataSet(new ArrayList<>());
-        for(int i = 0; i < left.data.size(); i++){
-            for(int j = 0; j < right.data.size(); j++){
-                int _i = i;
-                int _j = j;
-                this.joinColumns.forEach(indexes -> {
-                    int leftIndex = indexes.get(0);
-                    int rightIndex = indexes.get(1);
+    public DataSet computeJoinRawResult(){
+        DataSet rawResult = DataSet.of(new ArrayList<>());
+        for(int i = 0; i < left.size(); i++){
+            List<Object> row = new ArrayList<>(left.getRow(i));
+            for(int j = 0; j < right.size(); j++){
+                final int _i = i;
+                final int _j = j;
 
-                    List<Object> row = new ArrayList<>();
-                    row.addAll(left.data.get(_i));
-
-                    if(left.data.get(_i).get(leftIndex)
-                            .equals(right.data.get(_j).get(rightIndex))
-                    ){
-                        row.addAll(right.data.get(_j));
-                    }else{
-                        row.addAll(new ArrayList<>(right.columns.size()));
-                    }
-                    rawResult.data.add(row);
+                boolean isJoined = this.joinColumns.stream().allMatch(pair -> {
+                    int leftIndex = pair.get(0);
+                    int rightIndex = pair.get(1);
+                    return left.getRow(_i).get(leftIndex)
+                            .equals(right.getRow(_j).get(rightIndex));
                 });
+
+                if(isJoined){
+                    row.addAll(right.getRow(_j));
+                }
             }
+            if(row.size() == left.getColumnSize()){
+                List<Object> emptyRow = new ArrayList<>();
+                for(int k = 0; k < right.getColumnSize(); k++){
+                    emptyRow.add(null);
+                }
+                row.addAll(emptyRow);
+            }
+            rawResult.addRow(row);
         }
         return rawResult;
     }

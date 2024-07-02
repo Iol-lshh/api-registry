@@ -4,13 +4,18 @@ import java.util.Optional;
 
 public interface JoinSet {
     DataSet toDataSet();
+    JoinSet on(String sameKey);
     JoinSet on(String leftKey, String rightKey);
 
-    void selectLeftColumns(String column);
+    JoinSet selectAll();
+    JoinSet selectFromLeft(String column);
+    JoinSet selectFromLeft(String... columns);
+    JoinSet selectAllFromLeft();
+    JoinSet selectFromRight(String column);
+    JoinSet selectFromRight(String... columns);
+    JoinSet selectAllFromRight();
 
-    void selectRightColumns(String column);
+    Optional<Integer> findColumnIndexFromLeft(String column);
 
-    Optional<Integer> findIndexFromLeft(String column);
-
-    Optional<Integer> findIndexFromRight(String column);
+    Optional<Integer> findColumnIndexFromRight(String column);
 }

@@ -22,10 +22,15 @@ public abstract class JoinSetImplement implements JoinSet{
     }
 
     @Override
+    public JoinSet on(String key){
+        return on(key, key);
+    }
+
+    @Override
     public JoinSet on(String leftKey, String rightKey){
-        Integer leftIndex = findIndexFromLeft(leftKey)
+        Integer leftIndex = findColumnIndexFromLeft(leftKey)
                 .orElseThrow(() -> new IllegalArgumentException("Key not found"));
-        Integer rightIndex = findIndexFromRight(rightKey)
+        Integer rightIndex = findColumnIndexFromRight(rightKey)
                 .orElseThrow(() -> new IllegalArgumentException("Key not found"));
         List<Integer> joinColumn = new ArrayList<>();
         joinColumn.add(leftIndex);
@@ -36,52 +41,90 @@ public abstract class JoinSetImplement implements JoinSet{
 
     @Override
     public DataSet toDataSet() {
-        DataSet rawResult = computeJoin();
+        DataSet rawResult = computeJoinRawResult();
+        List<String> columns = computeJoinColumn();
+        return computeJoinData(columns, rawResult);
+    }
+    protected abstract DataSet computeJoinRawResult();
+    protected List<String> computeJoinColumn(){
         List<String> columns = new ArrayList<>();
-        selectColumns.get(0).forEach(index -> columns.add(left.columns.get(index)));
-        selectColumns.get(1).forEach(index -> columns.add(right.columns.get(index)));
-
+        selectColumns.get(0).forEach(index -> columns.add(left.getColumn(index)));
+        selectColumns.get(1).forEach(index -> columns.add(right.getColumn(index)));
+        return columns;
+    }
+    protected DataSet computeJoinData(List<String> columns, DataSet rawResult){
         DataSet dataSet = DataSet.of(columns);
-        for(List<Object> row : rawResult.data){
+        for(List<Object> row : rawResult.getRows()){
             List<Object> newRow = new ArrayList<>();
-            selectColumns.get(0).forEach(index -> newRow.add(row.get(index)));
-            selectColumns.get(1).forEach(index -> newRow.add(row.get(this.selectColumns.get(0).size() + index)));
-            dataSet.data.add(newRow);
+            for(int k = 0; k < this.selectColumns.get(0).size() + this.selectColumns.get(1).size(); k++){
+                newRow.add(null);
+            }
+            row.addAll(newRow);
+            selectColumns.get(0).forEach(index -> newRow.set(index, row.get(index)));
+            selectColumns.get(1).forEach(index -> newRow.set(index + this.selectColumns.get(0).size(), row.get(index + this.selectColumns.get(0).size())));
+            dataSet.addRow(newRow);
         }
         return dataSet;
     }
 
     @Override
-    public void selectLeftColumns(String column){
-        int index = findIndexFromLeft(column)
+    public JoinSet selectAll(){
+        selectAllFromLeft();
+        selectAllFromRight();
+        return this;
+    }
+    @Override
+    public JoinSet selectFromLeft(String column){
+        int index = findColumnIndexFromLeft(column)
                 .orElseThrow(() -> new IllegalArgumentException("Left Key not found"));
         this.selectColumns.get(0).add(index);
+        return this;
     }
-
     @Override
-    public void selectRightColumns(String column){
-        int index = findIndexFromRight(column)
+    public JoinSet selectFromLeft(String... columns){
+        for(String column : columns){
+            selectFromLeft(column);
+        }
+        return this;
+    }
+    @Override
+    public JoinSet selectAllFromLeft(){
+        this.selectColumns.get(0).clear();
+        for(int i = 0; i < left.getColumns().size(); i++){
+            this.selectColumns.get(0).add(i);
+        }
+        return this;
+    }
+    @Override
+    public JoinSet selectFromRight(String column){
+        int index = findColumnIndexFromRight(column)
                 .orElseThrow(() -> new IllegalArgumentException("Right Key not found"));
         this.selectColumns.get(1).add(index);
-    }
-
-
-    @Override
-    public Optional<Integer> findIndexFromLeft(String column){
-        int index = this.left.columns.indexOf(column);
-        if(index == -1){
-            return Optional.empty();
-        }
-        return Optional.of(index);
+        return this;
     }
     @Override
-    public Optional<Integer> findIndexFromRight(String column){
-        int index = this.right.columns.indexOf(column);
-        if(index == -1){
-            return Optional.empty();
+    public JoinSet selectFromRight(String... columns){
+        for(String column : columns){
+            selectFromRight(column);
         }
-        return Optional.of(index);
+        return this;
+    }
+    @Override
+    public JoinSet selectAllFromRight(){
+        this.selectColumns.get(1).clear();
+        for(int i = 0; i < right.getColumns().size(); i++){
+            this.selectColumns.get(1).add(i);
+        }
+        return this;
     }
 
-    public abstract DataSet computeJoin();
+    @Override
+    public Optional<Integer> findColumnIndexFromLeft(String column){
+        return this.left.findColumnIndex(column);
+    }
+    @Override
+    public Optional<Integer> findColumnIndexFromRight(String column){
+        return this.right.findColumnIndex(column);
+    }
+
 }
