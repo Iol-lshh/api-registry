@@ -18,14 +18,12 @@ public class LeftJoinSetImplement extends JoinSetImplement implements LeftJoinSe
             for(int j = 0; j < right.size(); j++){
                 final int _i = i;
                 final int _j = j;
-
                 boolean isJoined = this.joinColumns.stream().allMatch(pair -> {
                     int leftIndex = pair.get(0);
                     int rightIndex = pair.get(1);
                     return left.getRow(_i).get(leftIndex)
                             .equals(right.getRow(_j).get(rightIndex));
                 });
-
                 if(isJoined){
                     row.addAll(right.getRow(_j));
                 }

@@ -14,8 +14,8 @@ public class InnerJoinSetImplement extends JoinSetImplement implements InnerJoin
         DataSet rawResult = new DataSet(new ArrayList<>());
         for(int i = 0; i < left.size(); i++){
             for(int j = 0; j < right.size(); j++){
-                int _i = i;
-                int _j = j;
+                final int _i = i;
+                final int _j = j;
                 this.joinColumns.forEach(indexes -> {
                     int leftIndex = indexes.get(0);
                     int rightIndex = indexes.get(1);
