@@ -7,7 +7,6 @@ import org.lshh.skeleton.core.router.dto.RouterUpdateCommand;
 
 @Getter
 @Entity
-@Table(name = "router")
 public class RouterContext {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
