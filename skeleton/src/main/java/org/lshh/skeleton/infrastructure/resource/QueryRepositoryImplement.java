@@ -1,8 +1,8 @@
 package org.lshh.skeleton.infrastructure.resource;
 
 import lombok.RequiredArgsConstructor;
-import org.lshh.skeleton.core.resource.query.QueryRepository;
-import org.lshh.skeleton.core.resource.query.implement.QueryContext;
+import org.lshh.skeleton.library.resource.query.QueryRepository;
+import org.lshh.skeleton.library.resource.query.implement.QueryContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

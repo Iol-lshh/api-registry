@@ -1,10 +1,10 @@
 package org.lshh.skeleton.config;
 
-import org.lshh.skeleton.core.resource.resourcer.ResourcerManager;
-import org.lshh.skeleton.core.resource.resourcer.ResourcerProvider;
-import org.lshh.skeleton.core.resource.resourcer.ResourcerRepository;
-import org.lshh.skeleton.core.resource.resourcer.implement.ResourcerManagerImplement;
-import org.lshh.skeleton.core.resource.resourcer.implement.ResourcerProviderImplement;
+import org.lshh.skeleton.library.resource.resourcer.ResourcerManager;
+import org.lshh.skeleton.library.resource.resourcer.ResourcerProvider;
+import org.lshh.skeleton.library.resource.resourcer.ResourcerRepository;
+import org.lshh.skeleton.library.resource.resourcer.implement.ResourcerManagerImplement;
+import org.lshh.skeleton.library.resource.resourcer.implement.ResourcerProviderImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

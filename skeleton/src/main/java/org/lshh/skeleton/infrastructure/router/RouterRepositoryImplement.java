@@ -1,8 +1,8 @@
 package org.lshh.skeleton.infrastructure.router;
 
 import lombok.RequiredArgsConstructor;
-import org.lshh.skeleton.core.router.implement.RouterContext;
-import org.lshh.skeleton.core.router.RouterRepository;
+import org.lshh.skeleton.library.router.implement.RouterContext;
+import org.lshh.skeleton.library.router.RouterRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

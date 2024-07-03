@@ -1,8 +1,8 @@
 package org.lshh.skeleton.infrastructure.resource;
 
 import lombok.RequiredArgsConstructor;
-import org.lshh.skeleton.core.resource.resourcer.ResourcerRepository;
-import org.lshh.skeleton.core.resource.resourcer.implement.ResourcerContext;
+import org.lshh.skeleton.library.resource.resourcer.ResourcerRepository;
+import org.lshh.skeleton.library.resource.resourcer.implement.ResourcerContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
