@@ -1,7 +1,6 @@
 package org.lshh.skeleton.library.resource.query.implement;
 
-import org.lshh.skeleton.library.resource.argument.ArgumentsHashMap;
-import org.lshh.skeleton.library.resource.argument.ArgumentsMap;
+import org.lshh.skeleton.library.core.variable.data.DataSet;
 import org.lshh.skeleton.library.resource.query.Query;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -24,10 +23,10 @@ public class SimpleQuery implements Query {
     }
 
     @Override
-    public ArgumentsMap<String, Object> query(Map<String, Object> args) {
+    public DataSet query(Map<String, Object> args) {
         List<Map<String, Object>> list = JDBC_TEMPLATE.queryForList(QUERY_BODY, args);
-        ArgumentsMap<String, Object> result = new ArgumentsHashMap<>();
-        result.put("result", list);
-        return result;
+        List<String> columns = list.isEmpty() ? List.of() : List.copyOf(list.get(0).keySet());
+        List<List<Object>> rows = list.stream().map(map -> List.copyOf(map.values())).toList();
+        return DataSet.of(columns, rows);
     }
 }

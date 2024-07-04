@@ -1,4 +1,5 @@
 package org.lshh.skeleton.library.core.variable.unit;
 
-public interface QueryUnit {
+public class QueryUnit implements Unit {
+
 }

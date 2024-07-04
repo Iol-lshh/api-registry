@@ -4,7 +4,7 @@ import org.lshh.skeleton.library.core.variable.data.join.JoinSet;
 import java.util.List;
 import java.util.Optional;
 
-public interface DataSet {
+public interface DataSet extends DataVariable {
 
     static DataSet of(List<String> columns, List<List<Object>> data) {
         return new DataSetVariable(columns, data);
