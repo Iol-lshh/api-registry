@@ -1,6 +1,8 @@
 package org.lshh.skeleton.library.resource.query;
 
 public interface QueryManager {
+
+    Query find(String key);
     // Query 실행?
     // provider 관리
     // Query 영속성 명령 전달

@@ -2,6 +2,7 @@ package org.lshh.skeleton.library.resource.resourcer;
 
 import org.lshh.skeleton.library.resource.resourcer.implement.ResourcerContext;
 
+import java.nio.channels.FileChannel;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +14,6 @@ public interface ResourcerRepository {
     ResourcerContext create(ResourcerContext newOne);
 
     ResourcerContext update(ResourcerContext renewal);
+
+    Optional<ResourcerContext> findByName(String name);
 }

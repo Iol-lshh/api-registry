@@ -5,19 +5,17 @@ import org.lshh.skeleton.library.core.variable.data.join.InnerJoinSet;
 import org.lshh.skeleton.library.core.variable.data.join.JoinSet;
 import org.lshh.skeleton.library.core.variable.data.join.LeftJoinSet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public class DataSetVariable implements DataSet, Variable {
-    private List<String> columns;
-    private List<List<Object>> data;
+public class DataSetImplement implements DataSet, Variable {
+    private final List<String> columns;
+    private final List<List<Object>> data;
 
-    public DataSetVariable(List<String> columns, List<List<Object>> data){
+    public DataSetImplement(List<String> columns, List<List<Object>> data){
         this.columns = columns;
         this.data = data;
     }
-    public DataSetVariable(List<String> columns){
+    public DataSetImplement(List<String> columns){
         this.columns = columns;
         this.data = new ArrayList<>();
     }
@@ -71,5 +69,16 @@ public class DataSetVariable implements DataSet, Variable {
     @Override
     public JoinSet innerJoin(DataSet right){
         return InnerJoinSet.of(this, right);
+    }
+
+    @Override
+    public List<Map<String, Object>> toMapList() {
+        return this.data.stream().map(row -> {
+            Map<String, Object> _map = new HashMap<>();
+            for (int i = 0; i < this.columns.size(); i++) {
+                _map.put(this.columns.get(i), row.get(i));
+            }
+            return _map;
+        }).toList();
     }
 }

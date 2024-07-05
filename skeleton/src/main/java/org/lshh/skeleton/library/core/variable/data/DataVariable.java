@@ -1,4 +1,6 @@
 package org.lshh.skeleton.library.core.variable.data;
 
-public interface DataVariable {
+import org.lshh.skeleton.library.core.variable.Variable;
+
+public interface DataVariable extends Variable {
 }

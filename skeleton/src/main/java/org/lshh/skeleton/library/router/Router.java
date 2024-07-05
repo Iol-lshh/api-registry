@@ -5,5 +5,7 @@ public interface Router {
     String getPath();
 
     Long getId();
+
+    boolean isReady();
     // tryTask();
 }

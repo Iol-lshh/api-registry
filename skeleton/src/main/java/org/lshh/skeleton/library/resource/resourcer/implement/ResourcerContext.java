@@ -16,6 +16,9 @@ public class ResourcerContext {
     private String endpoint;
     private String description;
     private Resourcer.ResourcerType type;
+    private String userName;
+    private String password;
+
 
     public static ResourcerContext of(ResourcerCreateCommand command) {
         ResourcerContext context = new ResourcerContext();

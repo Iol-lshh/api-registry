@@ -6,6 +6,10 @@ public interface Resourcer {
 
     Long getId();
 
+    boolean isReady();
+
+    String getName();
+
     enum ResourcerType{
         RDBMS, API
     }

@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface ResourcerManager {
     Resourcer find(Long resourceId);
+    Resourcer find(String resourceName);
     List<Resourcer> findAll();
     Resourcer create(ResourcerCreateCommand command);
     Resourcer update(ResourcerUpdateCommand command);
     void clearCache();
     boolean isCached(Long id);
+
 }

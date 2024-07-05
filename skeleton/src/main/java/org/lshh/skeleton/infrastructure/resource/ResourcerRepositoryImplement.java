@@ -32,4 +32,9 @@ public class ResourcerRepositoryImplement implements ResourcerRepository {
     public ResourcerContext update(ResourcerContext renewal) {
         return repository.save(renewal);
     }
+
+    @Override
+    public Optional<ResourcerContext> findByName(String name) {
+        return repository.findByName(name);
+    }
 }

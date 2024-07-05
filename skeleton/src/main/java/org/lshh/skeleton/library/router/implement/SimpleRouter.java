@@ -21,4 +21,9 @@ public class SimpleRouter implements Router{
     public Long getId() {
         return context.getId();
     }
+
+    @Override
+    public boolean isReady() {
+        return true;
+    }
 }

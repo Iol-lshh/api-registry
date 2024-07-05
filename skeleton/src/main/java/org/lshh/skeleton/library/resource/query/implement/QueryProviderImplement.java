@@ -29,7 +29,8 @@ public class QueryProviderImplement implements QueryProvider {
             optionalQueryContext.isPresent()
             && optionalQueryContext.get() instanceof QueryContext queryContext
         ) {
-            return Optional.of(Query.of(queryContext, dataSource));
+            JdbcTemplateWrapper jdbcTemplate = JdbcTemplateWrapper.of(dataSource);
+            return Optional.of(Query.of(queryContext, jdbcTemplate));
         }
 
         throw new QueryTaskException("QueryTask not found");
@@ -39,13 +40,14 @@ public class QueryProviderImplement implements QueryProvider {
     public Query create(QueryCreateCommand command, DataSource dataSource) {
         QueryContext newOne = QueryContext.of(command);
 
-        return Query.of(repository.create(newOne), dataSource);
+        JdbcTemplateWrapper jdbcTemplate = JdbcTemplateWrapper.of(dataSource);
+        return Query.of(repository.create(newOne), jdbcTemplate);
     }
 
     @Override
     public Query update(QueryUpdateCommand command, DataSource dataSource) {
         QueryContext renewal = QueryContext.of(command);
-
-        return Query.of(repository.update(renewal), dataSource);
+        JdbcTemplateWrapper jdbcTemplate = JdbcTemplateWrapper.of(dataSource);
+        return Query.of(repository.update(renewal), jdbcTemplate);
     }
 }

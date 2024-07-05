@@ -41,6 +41,21 @@ public class ResourcerManagerImplement implements ResourcerManager {
     }
 
     @Override
+    public Resourcer find(String resourceName) {
+        return cacheMap.values().stream()
+                .filter(resourcer -> resourcer.getName().equals(resourceName))
+                .findFirst()
+                .orElseGet(() -> {
+                    Optional<Resourcer> mayResourcer = provider.find(resourceName);
+                    if(mayResourcer.isPresent()){
+                        cacheMap.put(mayResourcer.get().getId(), mayResourcer.get());
+                        return mayResourcer.get();
+                    }
+                    return null;
+                });
+    }
+
+    @Override
     public List<Resourcer> findAll() {
         List<Resourcer> list = provider.findAll();
         list.forEach(resourcer -> cacheMap.put(resourcer.getId(), resourcer));

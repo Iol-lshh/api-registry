@@ -25,6 +25,12 @@ public class ResourcerProviderImplement implements ResourcerProvider {
     }
 
     @Override
+    public Optional<Resourcer> find(String resourceName) {
+        return repository.findByName(resourceName)
+                .map(Resourcers::of);
+    }
+
+    @Override
     public List<Resourcer> findAll() {
         return repository.findAll()
                 .stream()

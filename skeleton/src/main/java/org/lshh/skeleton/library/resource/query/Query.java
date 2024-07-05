@@ -1,16 +1,28 @@
 package org.lshh.skeleton.library.resource.query;
 
+import org.lshh.skeleton.library.core.variable.Variable;
+import org.lshh.skeleton.library.core.variable.data.Constant;
 import org.lshh.skeleton.library.core.variable.data.DataSet;
+import org.lshh.skeleton.library.core.variable.data.DataVariable;
+import org.lshh.skeleton.library.resource.query.implement.JdbcTemplateWrapper;
 import org.lshh.skeleton.library.resource.query.implement.QueryContext;
 import org.lshh.skeleton.library.resource.query.implement.SimpleQuery;
-import org.lshh.skeleton.library.resource.argument.ArgumentsMap;
 
-import javax.sql.DataSource;
 import java.util.Map;
 
 public interface Query {
-    static Query of(QueryContext queryContext, DataSource dataSource) {
-        return new SimpleQuery(queryContext, dataSource);
+    static Query of(QueryContext queryContext, JdbcTemplateWrapper jdbcTemplate) {
+        return new SimpleQuery(queryContext, jdbcTemplate);
     }
-    DataSet query(Map<String, Object> args);
+
+    Query query();
+
+    boolean isReady();
+
+    Query setInput(String key, DataSet value);
+
+    Query setInput(String key, Constant value);
+
+    DataVariable getOutput();
+
 }

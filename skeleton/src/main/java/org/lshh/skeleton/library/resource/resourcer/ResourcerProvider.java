@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface ResourcerProvider {
     Optional<Resourcer> find(Long resourceId);
+    Optional<Resourcer> find(String resourceName);
 
     List<Resourcer> findAll();
 
@@ -19,13 +20,10 @@ public interface ResourcerProvider {
 
     class Resourcers{
         public static Resourcer of(ResourcerContext context){
-            switch(context.getType()){
-                case RDBMS:
-                    return SimpleRdbmsResourcer.of(context);
-
-                default:
-                    return null;
-            }
+            return switch (context.getType()) {
+                case RDBMS -> SimpleRdbmsResourcer.of(context);
+                default -> null;
+            };
         }
     }
 }
