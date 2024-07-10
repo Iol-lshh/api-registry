@@ -2,11 +2,15 @@ package org.lshh.skeleton.library.resource.query.implement;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.lshh.skeleton.library.resource.query.dto.command.QueryCreateCommand;
 import org.lshh.skeleton.library.resource.query.dto.command.QueryUpdateCommand;
 
 @Getter
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "query")
 public class QueryContext {
     @Id

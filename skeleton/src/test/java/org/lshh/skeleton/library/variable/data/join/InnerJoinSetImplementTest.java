@@ -2,8 +2,7 @@ package org.lshh.skeleton.library.variable.data.join;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.lshh.skeleton.library.core.variable.data.DataSet;
-import org.lshh.skeleton.library.core.variable.data.join.InnerJoinSetImplement;
+import org.lshh.skeleton.library.variable.data.DataSet;
 
 import java.util.Arrays;
 

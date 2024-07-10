@@ -2,7 +2,7 @@ package org.lshh.skeleton.library.resource.query.implement;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.lshh.skeleton.library.core.variable.data.DataSet;
+import org.lshh.skeleton.library.variable.data.DataSet;
 
 import javax.sql.DataSource;
 import java.util.*;

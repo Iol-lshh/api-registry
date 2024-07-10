@@ -2,10 +2,14 @@ package org.lshh.skeleton.library.router.implement;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.lshh.skeleton.library.router.dto.command.RouterCreateCommand;
 import org.lshh.skeleton.library.router.dto.command.RouterUpdateCommand;
 
 @Getter
+@DynamicInsert
+@DynamicUpdate
 @Entity
 public class RouterContext {
     @Id

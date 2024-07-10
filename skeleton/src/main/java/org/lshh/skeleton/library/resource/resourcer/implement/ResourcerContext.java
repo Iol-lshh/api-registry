@@ -3,11 +3,15 @@ package org.lshh.skeleton.library.resource.resourcer.implement;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.lshh.skeleton.library.resource.resourcer.Resourcer;
 import org.lshh.skeleton.library.resource.resourcer.dto.ResourcerCreateCommand;
 import org.lshh.skeleton.library.resource.resourcer.dto.ResourcerUpdateCommand;
 
 @Getter
+@DynamicInsert
+@DynamicUpdate
 @Entity
 public class ResourcerContext {
     @Id
