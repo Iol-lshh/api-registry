@@ -1,20 +1,20 @@
 package org.lshh.skeleton.library.variable.unit;
 
 import org.lshh.skeleton.library.transaction.Transaction;
-import org.lshh.skeleton.library.transaction.TransactionProcessor;
+import org.lshh.skeleton.library.transaction.agent.TransactionAgent;
 import org.lshh.skeleton.library.variable.Variable;
 
 public class TransactionUnit extends UnitVariable {
     private final Transaction transaction;
-    private final TransactionProcessor processor;
+    private final TransactionAgent agent;
 
-    public TransactionUnit(Transaction transaction, TransactionProcessor transactionProcessor) {
+    public TransactionUnit(Transaction transaction, TransactionAgent transactionAgent) {
         this.transaction = transaction;
-        this.processor = transactionProcessor;
+        this.agent = transactionAgent;
     }
 
-    public static TransactionUnit of(Transaction transaction, TransactionProcessor transactionProcessor) {
-        return new TransactionUnit(transaction, transactionProcessor);
+    public static TransactionUnit of(Transaction transaction, TransactionAgent transactionAgent) {
+        return new TransactionUnit(transaction, transactionAgent);
     }
 
     public Transaction getTransaction() {
@@ -22,7 +22,7 @@ public class TransactionUnit extends UnitVariable {
     }
     @Override
     public int act() {
-        return processor.runProcess(transaction);
+        return agent.run(transaction);
     }
 
     @Override

@@ -32,6 +32,8 @@ public interface DataSet extends DataVariable {
     JoinSet innerJoin(DataSet right);
     List<Map<String, Object>> toMapList();
 
+    DataSet selectAll();
+    DataSet select(String... columns);
     DataSet where(String column, Object value, String operator);
 
     DataSet getComputed();

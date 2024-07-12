@@ -65,11 +65,11 @@ public class TransactionImplement implements Transaction{
     }
 
     @Override
-    public Variable getTmpValue() {
+    public Variable getTempValue() {
         return this.tmpStack.pop();
     }
     @Override
-    public Transaction setTmpValue(Variable value){
+    public Transaction setTempValue(Variable value){
         this.tmpStack.push(value);
         return this;
     }

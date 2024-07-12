@@ -14,9 +14,8 @@ public interface Transaction {
 
     List<String[]> processQueue();
 
-    Variable getTmpValue();
-
-    Transaction setTmpValue(Variable value);
+    Variable getTempValue();
+    Transaction setTempValue(Variable value);
 
     Map<String, Variable> variableMap();
     Map<String, Variable> inputMap();

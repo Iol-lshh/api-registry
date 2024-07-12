@@ -1,10 +1,11 @@
 package org.lshh.skeleton.library.variable.data.join;
 
 import org.lshh.skeleton.library.variable.data.DataSet;
+import org.lshh.skeleton.library.variable.data.DataVariable;
 
 import java.util.Optional;
 
-public interface JoinSet {
+public interface JoinSet extends DataVariable {
     DataSet toDataSet();
     JoinSet on(String sameKey);
     JoinSet on(String leftKey, String rightKey);

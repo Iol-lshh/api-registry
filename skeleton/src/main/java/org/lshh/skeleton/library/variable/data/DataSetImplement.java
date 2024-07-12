@@ -10,24 +10,27 @@ import java.util.*;
 public class DataSetImplement implements DataSet, Variable {
     private final List<String> columns;
     private final List<List<Object>> data;
-    private final List<Integer> resultIndexes;
+    private final List<Integer> resultColumns;
+    private final List<Integer> resultRows;
 
     public DataSetImplement(List<String> columns, List<List<Object>> data){
         this.columns = columns;
         this.data = data;
-        this.resultIndexes = new ArrayList<>();
+        this.resultColumns = new ArrayList<>();
+        this.resultRows = new ArrayList<>();
         clearWhere();
     }
     public DataSetImplement(List<String> columns){
         this.columns = columns;
         this.data = new ArrayList<>();
-        this.resultIndexes = new ArrayList<>();
+        this.resultColumns = new ArrayList<>();
+        this.resultRows = new ArrayList<>();
     }
     @Override
     public DataSet clearWhere(){
-        this.resultIndexes.clear();
+        this.resultRows.clear();
         for(int i = 0; i < this.data.size(); i++){
-            this.resultIndexes.add(i);
+            this.resultRows.add(i);
         }
         return this;
     }
@@ -49,14 +52,14 @@ public class DataSetImplement implements DataSet, Variable {
     }
     @Override
     public List<Object> getRow(int index){
-        if(index < 0 || index >= this.data.size() || this.resultIndexes.stream().noneMatch(i -> i == index)){
+        if(index < 0 || index >= this.data.size() || this.resultRows.stream().noneMatch(i -> i == index)){
             throw new IndexOutOfBoundsException();
         }
         return this.data.get(index);
     }
     @Override
     public List<List<Object>> getRows(){
-        return this.resultIndexes.stream().map(this.data::get).toList();
+        return this.resultRows.stream().map(this.data::get).toList();
     }
     @Override
     public List<String> getColumns() {
@@ -90,7 +93,7 @@ public class DataSetImplement implements DataSet, Variable {
 
     @Override
     public List<Map<String, Object>> toMapList() {
-        return this.resultIndexes.stream().map(this.data::get)
+        return this.resultRows.stream().map(this.data::get)
                 .map(row -> {
                     Map<String, Object> _map = new HashMap<>();
                     for (int i = 0; i < this.columns.size(); i++) {
@@ -101,9 +104,19 @@ public class DataSetImplement implements DataSet, Variable {
     }
 
     @Override
+    public DataSet selectAll() {
+        return null;
+    }
+
+    @Override
+    public DataSet select(String... columns) {
+        return null;
+    }
+
+    @Override
     public DataSet where(String column, Object value, String operator) {
-        List<Integer> indexes = new ArrayList<>(this.resultIndexes);
-        this.resultIndexes.clear();
+        List<Integer> indexes = new ArrayList<>(this.resultRows);
+        this.resultRows.clear();
         indexes.stream().filter(index -> {
             int columnIndex = this.columns.indexOf(column);
             Object rowValue = this.data.get(index).get(columnIndex);
@@ -123,7 +136,7 @@ public class DataSetImplement implements DataSet, Variable {
                 default:
                     return false;
             }
-        }).forEach(this.resultIndexes::add);
+        }).forEach(this.resultRows::add);
         return this;
     }
 
@@ -131,7 +144,7 @@ public class DataSetImplement implements DataSet, Variable {
     public DataSet getComputed(){
         return DataSet.of(
                 this.columns,
-                this.resultIndexes.stream().map(this.data::get).toList()
+                this.resultRows.stream().map(this.data::get).toList()
         );
     }
 }
